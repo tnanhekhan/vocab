@@ -1,7 +1,5 @@
 # Vocab
 
-# Vocab
-
 Meesterproef Minor Web Development
 
 ## Installation
