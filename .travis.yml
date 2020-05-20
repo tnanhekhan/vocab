@@ -1,6 +1,9 @@
 language: node_js
 node_js:
   - 12.16
+before_script:
+  - npm install firebase-tools -g
+  - cd functions && npm install
 script: true
 deploy:
   provider: firebase
