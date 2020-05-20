@@ -3,7 +3,7 @@
 Meesterproef Minor Web Development
 
 ## Installation
-Yoo
+Yoo bro
 ## Usage
 ## Live Version:
 Hosting: https://vocab-project.web.app/
