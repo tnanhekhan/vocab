@@ -1,16 +1,12 @@
 language: node_js
-node_js:
-  - 12.16
+node_js: 8
 before_script:
   - npm install firebase-tools -g
   - cd functions && npm install
   - cd ..
-deploy:
-  provider: firebase
-  token:
-    secure: Jd04W4Gg8Q5BMpuhRqu3rqGDBkEY62a2C08ywgHYJt4vzQ1fG9gfANdpfJByhsYjptoVnnLsoKEJxow8c9RTakGPCC+LePG++lHOXuNplMB3fNpWltPmcn+AW1q3W6MyzZH9rN9rSNmGgQq3oTpZgWCJdsLDJYyWu94+k+mq5FeU0GYrs4B2P5ZgWEpXgt53FjNzyzBoUfy4DCT1LgSHcxDtiT62BzLi8LuhzrZKiCa1cl7KCFBoxN1wRQ/6r6/5dg/qXFGjvremFVQEkEwc/0c2bRDyZcHah38D6N3l1SYYzZtIbLfw17uwuOt4Tarp1Co6bKpC2vvmu33zhuBpFnR8fyKxwHdhTzIXCs4TQbCkE6/LVBN0oQ+MCx9IwbjViBuDZ1tTf3AmO0oSX31IpI4RTDPZolD36ovywcQlj8+rlt6S9EaXkcSfTTGvq1UeUO7659I6IFuJn9lJtXcLwfYiS9KlHowkNSk9nIYe+cuKdiPjmOUbC6+Za60bB4+LFnL63zVwrwNBJNmJGzyh3A5kuAzaV9DiekFIt6cCkb/iLfWFFTy1/dyJIP7iGEK7MaItHm1SgByHTG3G81b5BckRrGF5qLccnhQ7q1pluqahTfeijEdFJRcU2puIB0ibFsBrN7lYG4UW+KkNPC5frlRRWZ5EiG+Y2YZRcGcf6tQ=
-  on:
-    branch: live
+  - npm install
 branches:
   only:
     - live
+script:
+  - firebase deploy --token $FIREBASE_TOKEN
