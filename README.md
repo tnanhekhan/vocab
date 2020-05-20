@@ -3,7 +3,7 @@
 Meesterproef Minor Web Development
 
 ## Installation
-Yoo
+Yoo bro
 ## Usage
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
