@@ -198,4 +198,5 @@ dist/
 tmp/
 temp/
 
+/functions/admin.json
 # End of https://www.gitignore.io/api/node,dotenv,intellij
