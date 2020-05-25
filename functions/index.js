@@ -3,10 +3,16 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const serviceAccount = require('./admin.json');
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: functions.config().database.url
-});
+const {dialogflow,
+    HtmlResponse,
+} = require('actions-on-google');
+
+const appD = dialogflow({debug: true});
+
+const credential = admin.credential.cert(serviceAccount);
+const databaseURL = functions.config().database.url;
+admin.initializeApp({credential: credential, databaseURL: databaseURL});
+
 const db = admin.firestore();
 
 const express = require('express');
@@ -59,7 +65,6 @@ app.get("/db", (req, res) => {
             snapshot.forEach(doc => {
                 words.push(`<li><a href="#" class="database-word" id=${doc.id}>${doc.data().word}</a></li>`)
             });
-
             res.send(`<!doctype html>
             <head>
                 <title>DB</title>
@@ -81,7 +86,7 @@ app.get("/db", (req, res) => {
 });
 
 app.post("/db", (req, res) => {
-    const data = JSON.parse(req.body)
+    const data = JSON.parse(req.body);
     wordCollection.doc(data.id).delete().then(
         success => {
             res.send(data)
@@ -91,4 +96,23 @@ app.post("/db", (req, res) => {
         })
 });
 
+appD.intent('welcome', (conv) => {
+    if(!conv.surface.capabilities.has('actions.capability.INTERACTIVE_CANVAS')){
+        conv.close('sorrie, dit apparaat kan deze app niet ondersteunen');
+        return;
+    }
+    conv.ask('hi, welkom in de vocab app');
+    return wordCollection.doc('Xw957bRoA6Z7DKoVh74b').get()
+        .then(doc => {
+            conv.ask(doc.data().word);
+            conv.ask(new HtmlResponse({
+                url: 'https://vocab-project.firebaseapp.com/',
+                data: {
+                    words: doc.data().word
+                }
+            }));
+        });
+});
+
 exports.app = functions.https.onRequest(app);
+exports.appD = functions.https.onRequest(appD);
