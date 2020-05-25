@@ -6,6 +6,13 @@
     "start": "node index.js",
     "serve": "firebase serve"
   },
+<<<<<<< Updated upstream
   "devDependencies": {},
   "dependencies": {}
+=======
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-replace": "^1.0.0"
+  }
+>>>>>>> Stashed changes
 }
