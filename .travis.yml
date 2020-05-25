@@ -5,6 +5,7 @@ before_script:
   - cd functions && npm install
   - cd ..
   - npm install
+  - gulp
 branches:
   only:
     - live

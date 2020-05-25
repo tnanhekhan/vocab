@@ -9,10 +9,10 @@ const {dialogflow,
 
 const appD = dialogflow({debug: true});
 
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: functions.config().database.url
-});
+const credential = admin.credential.cert(serviceAccount);
+const databaseURL = functions.config().database.url;
+admin.initializeApp({credential: credential, databaseURL: databaseURL});
+
 const db = admin.firestore();
 
 const express = require('express');
