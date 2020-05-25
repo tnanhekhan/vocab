@@ -5,5 +5,7 @@
   "scripts": {
     "start": "node index.js",
     "serve": "firebase serve"
-  }
+  },
+  "devDependencies": {},
+  "dependencies": {}
 }
