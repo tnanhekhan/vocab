@@ -1,11 +1,11 @@
 language: node_js
 node_js: 8
 before_script:
+  - gulp
   - npm install firebase-tools -g
   - cd functions && npm install
   - cd ..
   - npm install
-  - gulp
 branches:
   only:
     - live
