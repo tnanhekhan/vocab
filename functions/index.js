@@ -1,99 +1,37 @@
 'use strict';
 
 const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-const serviceAccount = require('./admin.json');
-const {dialogflow,
-    HtmlResponse,
-} = require('actions-on-google');
+const {dialogflow, HtmlResponse,} = require('actions-on-google');
 
 const appD = dialogflow({debug: true});
 
-const credential = admin.credential.cert(serviceAccount);
-const databaseURL = functions.config().database.url;
-admin.initializeApp({credential: credential, databaseURL: databaseURL});
-
-const db = admin.firestore();
-
+const createError = require('http-errors');
+const path = require('path');
 const express = require('express');
+const cmsRouter = require('./routes/cms')
 const app = express();
 
-let wordCollection = db.collection('wordlists').doc('wordlist').collection("wordCollection");
+app.set('views', path.join(__dirname, 'views'))
+    .set('view engine', 'ejs')
+    .use(express.static(path.join(__dirname, 'public')))
+    .use(express.json())
+    .use(express.urlencoded({extended: false}))
+    .use('/cms', cmsRouter);
 
-app.get("/cms", (req, res) => {
-    res.send(`<!doctype html>
-    <head>
-      <title>CMS</title>
-    </head>
-    <body>
-      </q><a href="/">Home</a>
-      <h1>CMS</h1>
-      <form method="post" >
-        <label for="fname">Word for database</label><br>
-        <input type="text" id="word" name="word" placeholder="Enter a word here:" required><br>
-        <input type="submit" value="Submit Word">
-        </form> 
-    </body>
-  </html>`)
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+    next(createError(404));
 });
 
-app.post("/cms", (req, res) => {
-    const word = req.body.word;
-    wordCollection.add({word: word, timestamp: Date.now()}).then(ref => {
-        res.send(`<!doctype html>
-            <head>
-            <title>CMS</title>
-            </head>
-            <body>
-                <a href="/">Home</a>
-                <h1>CMS</h1>
-                <h2>Uploaded word : ${word}</h2>
-                 <form method="post" >
-                    <label for="fname">Word for database</label><br>
-                    <input type="text" id="word" name="word" placeholder="Enter a word here:" required><br>
-                    <input type="submit" value="Submit Word">
-                  </form> 
-            </body>
-            </html>`);
-    })
-});
+// error handler
+app.use(function (err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-app.get("/db", (req, res) => {
-    wordCollection.get()
-        .then(snapshot => {
-            let words = [];
-            snapshot.forEach(doc => {
-                words.push(`<li><a href="#" class="database-word" id=${doc.id}>${doc.data().word}</a></li>`)
-            });
-            res.send(`<!doctype html>
-            <head>
-                <title>DB</title>
-            </head>
-            <body>
-                <a href="/">Home</a>
-                <h1>DB</h1>
-                <h2>All inserted words: </h2>
-                <ul>
-                    ${words.map(word => `${word}`).join('')}
-                </ul>
-                <script src="js/db.js"></script>
-            </body>
-            </html>`);
-        })
-        .catch(err => {
-            console.log('Error getting documents', err);
-        });
-});
-
-app.post("/db", (req, res) => {
-    const data = JSON.parse(req.body);
-    wordCollection.doc(data.id).delete().then(
-        success => {
-            res.send(data)
-        })
-        .catch(error => {
-            console.log("error failed: " + error)
-        })
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error', {title: "404"});
 });
 
 appD.intent('welcome', (conv) => {
