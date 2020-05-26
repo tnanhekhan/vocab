@@ -6,7 +6,14 @@ const router = express.Router();
 let wordCollection = db.collection('wordlists').doc('wordlist').collection("wordCollection");
 
 router.get('/', (req, res, next) => {
-    res.render("cms", {title: "CMS"});
+    db.collection('wordLists').get()
+        .then(snapshot => {
+            console.log(snapshot)
+            res.render("cms", {title: "CMS"});
+        })
+        .catch(err => {
+            console.log('Error getting documents', err);
+        });
 });
 
 router.post("/", (req, res, next) => {
