@@ -8,7 +8,7 @@ const appD = dialogflow({debug: true});
 const createError = require('http-errors');
 const path = require('path');
 const express = require('express');
-const cmsRouter = require('./routes/cms')
+const cmsRouter = require('./routes/cms');
 const app = express();
 
 app.set('views', path.join(__dirname, 'views'))
