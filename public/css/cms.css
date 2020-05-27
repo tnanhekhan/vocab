@@ -14,6 +14,12 @@ body {
     top: 0;
     left: 0;
     background-color: white;
+    padding-top: 32px;
+}
+
+#selected-nav {
+    color: #fe3c2f;
+    padding: 48px 48px 48px calc(48px + 4px);
 }
 
 .sidenav a {
@@ -39,4 +45,69 @@ main {
     color: white;
     padding: 24px;
     border-radius: 16px;
+}
+
+.content {
+    background-color: white;
+    padding: 8px 32px 32px;
+    border-radius: 16px;
+}
+
+.wordlist-item {
+    position: relative;
+    box-shadow: 0 0 0 transparent;
+    border: 0 solid transparent;
+    text-shadow: 0 0 0 transparent;
+    height: 20vh;
+    width: 20vh;
+    text-decoration: none;
+    color: black;
+    background: #fff1ef;
+    cursor: pointer;
+    border-radius: 16px;
+    margin: 16px;
+}
+
+.add {
+    color: #fe3c2f;
+    font-size: 22px;
+}
+
+.wordlists-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+
+.wordlist-add-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.wordlist-add-select{
+    height: 20vh;
+    width: 40vh;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.hidden-file-input{
+    visibility: hidden;
+    height: 0;
+    width: 0;
+}
+
+.file-input-label {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    background: #fff1ef;
+    cursor: pointer;
+    height: 20vh;
+    width: 40vh;
+    font-weight: bold;
+    font-size: 22px;
+    border-radius: 16px;
+    margin: 16px -10% 16px 16px;
 }

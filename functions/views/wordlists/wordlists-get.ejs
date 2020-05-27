@@ -1,0 +1,27 @@
+<%- include ("../partials/head.ejs") %>
+<main>
+    <!--        <form method="post">-->
+    <!--            <label for="fname">Word for database</label><br>-->
+    <!--            <input type="text" id="word" name="word" placeholder="Enter a word here:" required><br>-->
+    <!--            <input type="submit" value="Submit Word">-->
+    <!--        </form>-->
+    <h1 class="header">Woordenlijsten</h1>
+
+    <div class="content">
+        <h2>Thema's</h2>
+        <div class="wordlists-container">
+            <% wordLists.forEach(wordlist => { %>
+                <a href="word-lists/<%= wordlist.id %>">
+                    <button class="wordlist-item"><%= wordlist.id %></button>
+                </a>
+            <% }); %>
+            <% for (var i = 0; i < 53; i++) { %>
+                <a href="word-lists/add">
+                    <button class="wordlist-item add">+</button>
+                </a>
+            <% } %>
+        </div>
+    </div>
+</main>
+
+<%- include ("../partials/footer.ejs") %>

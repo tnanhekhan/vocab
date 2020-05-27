@@ -12,9 +12,27 @@
 <div class="sidenav">
     <h1>Vocab</h1>
     <nav>
-        <a href="/db">Dashboard</a>
-        <a href="/cms">Woordenlijsten</a>
-        <a href="/ass">Klassenlijsten</a>
-        <a href="/dc">Docenten Chat</a>
+        <% switch(dest) {
+        case "dashboard": %>
+        <a id=selected-nav href="/cms">Dashboard</a>
+        <a href="/cms/word-lists">Woordenlijsten</a>
+        <a href="/cms/class-lists">Klassenlijsten</a>
+        <a href="/cms/teacher-chat">Docenten chat</a>
+        <% break;
+
+        case "wordlists": %>
+        <a href="/cms">Dashboard</a>
+        <a id=selected-nav href="/cms/word-lists">Woordenlijsten</a>
+        <a href="/cms/class-lists">Klassenlijsten</a>
+        <a href="/cms/teacher-chat">Docenten chat</a>
+        <% break;
+
+        default: %>
+        <a href="/cms">Dashboard</a>
+        <a href="/cms/word-lists">Woordenlijsten</a>
+        <a href="/cms/class-lists">Klassenlijsten</a>
+        <a href="/cms/teacher-chat">Docenten chat</a>
+        <% break;
+         } %>
     </nav>
 </div>

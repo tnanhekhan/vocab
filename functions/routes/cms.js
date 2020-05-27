@@ -5,60 +5,50 @@ const router = express.Router();
 
 let wordCollection = db.collection('wordlists').doc('wordlist').collection("wordCollection");
 
-router.get('/', (req, res, next) => {
-    db.collection('wordLists').get()
+router.get("/", (req, res, next) => {
+    res.render("dashboard/dashboard", {title: "CMS", dest: "dashboard"});
+});
+
+router.get('/word-lists', (req, res, next) => {
+    db.collection('wordlists').get()
         .then(snapshot => {
-            console.log(snapshot)
-            res.render("cms", {title: "CMS"});
+            let wordlists = []
+            snapshot.forEach(doc => {
+                wordlists.push(doc)
+            });
+            return wordlists
+        })
+        .then(wordLists => {
+            res.render("wordlists/wordlists-get", {title: "CMS", dest: "wordlists", wordLists: wordLists});
         })
         .catch(err => {
             console.log('Error getting documents', err);
         });
 });
 
-router.post("/", (req, res, next) => {
+router.post("/word-lists", (req, res, next) => {
     const word = req.body.word;
     wordCollection.add({word: word, timestamp: Date.now()}).then(ref => {
-        res.render("cmsPost", {title: "CMS", uploadedWord: word})
+        res.render("wordlists/wordlists-post", {title: "CMS", uploadedWord: word});
     })
 });
 
-router.get("/db", (req, res, next) => {
-    wordCollection.get()
-        .then(snapshot => {
-            let words = [];
-            snapshot.forEach(doc => {
-                words.push(`<li><a href="#" class="database-word" id=${doc.id}>${doc.data().word}</a></li>`)
-            });
-            res.send(`<!doctype html>
-            <head>
-                <title>DB</title>
-            </head>
-            <body>
-                <a href="/">Home</a>
-                <h1>DB</h1>
-                <h2>All inserted words: </h2>
-                <ul>
-                    ${words.map(word => `${word}`).join('')}
-                </ul>
-                <script src="/js/db.js"></script>
-            </body>
-            </html>`);
-        })
-        .catch(err => {
-            console.log('Error getting documents', err);
-        });
+router.get('/word-lists/add', (req, res, next) => {
+    res.render("wordlists/add", {title: "CMS", dest: "wordlists"});
 });
 
-router.post("/db", (req, res, next) => {
-    const data = JSON.parse(req.body);
-    wordCollection.doc(data.id).delete().then(
-        success => {
-            res.send(data)
-        })
-        .catch(error => {
-            console.log("error failed: " + error)
-        })
+router.get('/word-lists/:listId', (req, res, next) => {
+    db.collection("wordlists").doc(req.params.listId).listCollections()
+        .then(collections => {
+            const collectionId = collections[0].id;
+            db.collection("wordlists").doc(req.params.listId).collection(collectionId).get()
+                .then(snapshot => {
+                    return snapshot.docs;
+                })
+                .then(words => {
+                    res.render("wordlists/words", {title: "CMS", dest: "wordlists", words: words, listId: req.params.listId});
+                })
+        });
 });
 
 module.exports = router;
