@@ -5,6 +5,7 @@
     <div class="content">
         <h2>Thema's</h2>
         <div class="wordlists-container">
+            <% words.sort((a, b) => (a.data().timestamp > b.data().timestamp) ? 1 : ((b.data().timestamp > a.data().timestamp) ? -1 : 0)) %>
             <% words.forEach(word => { %>
                 <a href="<%= listId %>/<%= word.id %>">
                     <button class="wordlist-item"><%= word.data().word %></button>

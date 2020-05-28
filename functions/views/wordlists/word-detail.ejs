@@ -3,7 +3,12 @@
 <main>
     <h1 class="header">Dashboard</h1>
     <div class="content">
-        <h2>Content</h2>
+        <h2>Woord toevoegen</h2>
+        <form id="word-form" method="post">
+            <input type="text" id="word-form-input" name="word" value="<%= word %>"><br>
+            <input id="update-form-button" class="form-button" name="save-word" type="submit" value="Opslaan">
+            <input id="cancel-form-button" class="form-button" name="cancel-word" type="submit" value="Annuleren">
+        </form>
     </div>
 </main>
 
