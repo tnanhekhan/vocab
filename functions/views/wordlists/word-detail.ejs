@@ -8,8 +8,11 @@
             <input type="text" class="form-input" name="word" value="<%= word %>"><br>
             <input class="form-button success-button" name="save-word" type="submit" value="Opslaan">
             <input class="form-button cancel-button" name="cancel-word" type="submit" value="Annuleren">
+            <% if (word.length != 0) { %>
+                <input class="form-button delete-button" name="delete-word" type="submit" value="Verwijderen">
+            <% } %>
         </form>
     </div>
 </main>
 
-<%- include ("../partials/footer.ejs") %>
+<%- include ("../partials/footer.ejs") %>s

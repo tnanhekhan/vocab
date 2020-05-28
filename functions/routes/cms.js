@@ -181,6 +181,16 @@ router.post("/word-lists/:listId/:wordId", (req, res, next) => {
                         res.redirect(`/cms/word-lists/${req.params.listId}`);
                     });
             });
+    } else if ("delete-word" in req.body) {
+        db.collection("wordlists").doc(req.params.listId).listCollections()
+            .then(collections => {
+                const collectionId = collections[0].id;
+                db.collection("wordlists").doc(req.params.listId).collection(collectionId).doc(req.params.wordId)
+                    .delete()
+                    .then(() => {
+                        res.redirect(`/cms/word-lists/${req.params.listId}`);
+                    });
+            });
     } else {
         res.redirect(`/cms/word-lists/${req.params.listId}`);
     }

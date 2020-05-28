@@ -118,6 +118,11 @@ main {
     width: 100%;
 }
 
+#word-form{
+    display: flex;
+    width: 100%;
+}
+
 .form-input {
     background-color: #fff1ef;
     height: 5vh;
@@ -147,4 +152,8 @@ main {
 
 .cancel-button {
     background-color: #fe3c2f;
+}
+
+.delete-button {
+    background-color: black;
 }
