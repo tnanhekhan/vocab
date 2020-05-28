@@ -1,20 +1,35 @@
 <%- include ("../partials/head.ejs") %>
+
 <main>
     <h1 class="header">Woordenlijsten</h1>
-
     <div class="content">
-        <h2>Thema's</h2>
+        <h2>Woordenlijst naam</h2>
+        <form id="word-list-name-form" method="post">
+            <% if(listName.length != 0) { %>
+                <input type="text" class="form-input" name="listName" value="<%= listName %>" required><br>
+                <input type="hidden" name="listId" value="<%= listId %>">
+                <input class="form-button success-button" name="save-wordlist" type="submit" value="Updaten">
+                <input class="form-button cancel-button" name="delete-wordlist" type="submit" value="Verwijderen">
+            <% } else { %>
+                <input type="text" class="form-input" name="listName" value="<%= listName %>" required><br>
+                <input type="hidden" name="listId" value="<%= listId %>">
+                <input class="form-button success-button" name="save-wordlist" type="submit" value="Aanmaken">
+                <input class="form-button cancel-button" name="delete-wordlist" type="submit" value="Annuleren">
+            <% } %>
+        </form>
         <div class="wordlists-container">
-            <% words.sort((a, b) => (a.data().timestamp > b.data().timestamp) ? 1 : ((b.data().timestamp > a.data().timestamp) ? -1 : 0)) %>
-            <% words.forEach(word => { %>
-                <a href="<%= listId %>/<%= word.id %>">
-                    <button class="wordlist-item"><%= word.data().word %></button>
-                </a>
-            <% }); %>
-            <% for (var i = 0; i < 53; i++) { %>
-                <a href="<%= listId %>/add">
-                    <button class="wordlist-item add">+</button>
-                </a>
+            <% if(listName.length != 0) { %>
+                <% words.sort((a, b) => (a.data().timestamp > b.data().timestamp) ? 1 : ((b.data().timestamp > a.data().timestamp) ? -1 : 0)) %>
+                <% words.forEach(word => { %>
+                    <a href="<%= listId %>/<%= word.id %>">
+                        <button class="wordlist-item"><%= word.data().word %></button>
+                    </a>
+                <% }); %>
+                <% for (var i = 0; i < 53; i++) { %>
+                    <a href="<%= listId %>/add">
+                        <button class="wordlist-item add">+</button>
+                    </a>
+                <% } %>
             <% } %>
         </div>
     </div>

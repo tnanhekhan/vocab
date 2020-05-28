@@ -112,22 +112,28 @@ main {
     margin: 16px -10% 16px 16px;
 }
 
-#word-form-input {
+#word-list-name-form{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.form-input {
     background-color: #fff1ef;
     height: 5vh;
     width: 20vw;
     border: 0px none;
     border-radius: 16px;
     padding: 8px;
-    margin: 16px;
+    margin: 32px;
     font-size: 18px;
 }
 
 .form-button {
     border: 0px none;
-    margin: 16px;
+    margin: 32px;
     padding: 8px;
-    width: 10vw;
+    width: 15vw;
     height: 5vh;
     color: white;
     border-radius: 16px;
@@ -135,10 +141,10 @@ main {
     cursor: pointer;
 }
 
-#update-form-button {
+.success-button {
     background-color: #0aa304;
 }
 
-#cancel-form-button {
+.cancel-button {
     background-color: #fe3c2f;
 }
