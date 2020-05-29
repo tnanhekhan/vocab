@@ -1,11 +1,9 @@
 'use strict';
-//const dialogFlowApp = require("./DialogflowApp");
-const bodyParser = require("body-parser");
+
 const {
     dialogflow,
     HtmlResponse
 } = require("actions-on-google");
-
 const fb = require("./firebase");
 const db = fb.firestore();
 const functions = require('firebase-functions');
@@ -13,29 +11,28 @@ const functions = require('firebase-functions');
 let wordCollection = db.collection('wordlists').doc('wordlist').collection("wordCollection");
 
 // Instantiate the Dialogflow client.
-const appD = dialogflow({ debug: true });
+const app = dialogflow({ debug: true });
 
 const createError = require('http-errors');
 const path = require('path');
 const express = require('express');
 const cmsRouter = require('./routes/cms');
-const app = express();
+const expressApp = express();
 
-app.set('views', path.join(__dirname, 'views'))
+expressApp.set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
     .use(express.static(path.join(__dirname, 'public')))
     .use(express.json())
     .use(express.urlencoded({extended: false}))
-    .use('/cms', cmsRouter)
-    .use(bodyParser.json());
+    .use('/cms', cmsRouter);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+expressApp.use(function (req, res, next) {
     next(createError(404));
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+expressApp.use(function (err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -45,8 +42,9 @@ app.use(function (err, req, res, next) {
     res.render('error', {title: "404"});
 });
 
+const MAX_INCORRECT_GUESSES = 3;
 
-appD.intent('Welcome', (conv) => {
+app.intent('Welcome', conv => {
     if(!conv.surface.capabilities.has('actions.capability.INTERACTIVE_CANVAS')){
         conv.close('sorrie, dit apparaat kan deze app niet ondersteunen');
         return;
@@ -54,54 +52,55 @@ appD.intent('Welcome', (conv) => {
     conv.ask('hi, welkom in de vocab app, ben je klaar?');
     conv.ask(new HtmlResponse({
         url: 'https://vocab-project.firebaseapp.com/',
+        data: {
+            event: 'WELCOME',
+        },
     }));
-
 });
 
-appD.intent('Woorden', (conv) => {
-    /*return wordCollection.get().then(snapshot => {
-        let woorden = [];
-        snapshot.forEach(woord => {
-            woorden.push(woord.data().word)
-            conv.ask(woord.data().word);
-        });
-        console.log('woorden ', woorden);
+let index = 0;
+let woorden = [];
 
+app.intent('Begin', conv => {
+    return wordCollection.get().then(snapshot => {
+        snapshot.forEach(woord => {
+            woorden.push(woord.data().word);
+        });
+        conv.ask(woorden[index]);
         conv.ask(new HtmlResponse({
             data: {
-                words: woorden
+                event: 'OEFENEN',
+                woord: woorden[index]
             }
         }));
-    });*/
+    });
+});
 
-    conv.ask('yo');
+app.intent('Woordjes', (conv, {gesprokenWoord}) => {
+    console.log('inhoud ', woorden);
+    if(gesprokenWoord !== woorden[index]){
+        //herhaal
+    } else {
+        //verstuur ${index} naar db met ${conv.data.guess}
+        index += 1;
+    }
+    conv.ask(woorden[index]);
     conv.ask(new HtmlResponse({
         data: {
-            test: 'woordjes',
-            woord: 'woorden'
+            event: 'OEFENEN',
+            woord: woorden[index]
         }
     }));
 });
 
-appD.intent('woordOefenen', (conv, spokenWord) => {
-    conv.data.guess = 0;
-    if(spokenWord !== woord){
-        conv.data.guess++;
-        //herhaal
-    } else {
-        //verstuur ${woord} naar db met ${conv.data.guess}
-    }
-});
-
-appD.intent('Fallback', (conv) => {
+app.intent('Fallback', conv => {
     conv.close('Er gaat wat mis');
-    conv.ask(new HtmlResponse());
 });
 
-appD.intent('Hallo', (conv) => {
-    conv.close('Hi');
-    conv.ask(new HtmlResponse());
+app.catch((conv, error) => {
+    console.error(error);
+    conv.ask('I encountered a glitch. Can you say that again?');
 });
 
-exports.app = functions.https.onRequest(app);
-exports.dialogflowFirebaseFulfillment = functions.https.onRequest(appD);
+exports.expressApp = functions.https.onRequest(expressApp);
+exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);

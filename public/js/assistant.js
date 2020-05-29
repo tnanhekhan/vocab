@@ -20,13 +20,15 @@ function setCanvasHeaderHeight(){
 }
 
 function updateCanvas(data){
-    if(data) {
-        switch(data.test){
-            case "woordjes":
+    if(data.event) {
+        switch (data.event) {
+            case 'OEFENEN':
                 showWoord(data.woord);
                 break;
+            case 'WELCOME':
+                showWoord('welkom');
+                break;
         }
-
     }
 }
 
