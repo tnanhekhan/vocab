@@ -1,17 +1,25 @@
 'use strict';
 
+const {
+    dialogflow,
+    HtmlResponse
+} = require("actions-on-google");
+const fb = require("./firebase");
+const db = fb.firestore();
 const functions = require('firebase-functions');
-const {dialogflow, HtmlResponse,} = require('actions-on-google');
 
-const appD = dialogflow({debug: true});
+let wordCollection = db.collection('wordlists').doc('wordlist').collection("wordCollection");
+
+// Instantiate the Dialogflow client.
+const app = dialogflow({ debug: true });
 
 const createError = require('http-errors');
 const path = require('path');
 const express = require('express');
-const cmsRouter = require('./routes/cms')
-const app = express();
+const cmsRouter = require('./routes/cms');
+const expressApp = express();
 
-app.set('views', path.join(__dirname, 'views'))
+expressApp.set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
     .use(express.static(path.join(__dirname, 'public')))
     .use(express.json())
@@ -19,12 +27,12 @@ app.set('views', path.join(__dirname, 'views'))
     .use('/cms', cmsRouter);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+expressApp.use(function (req, res, next) {
     next(createError(404));
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+expressApp.use(function (err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -34,23 +42,65 @@ app.use(function (err, req, res, next) {
     res.render('error', {title: "404", dest: "404"});
 });
 
-appD.intent('welcome', (conv) => {
+const MAX_INCORRECT_GUESSES = 3;
+
+app.intent('Welcome', conv => {
     if(!conv.surface.capabilities.has('actions.capability.INTERACTIVE_CANVAS')){
         conv.close('sorrie, dit apparaat kan deze app niet ondersteunen');
         return;
     }
-    conv.ask('hi, welkom in de vocab app');
-    return wordCollection.doc('Xw957bRoA6Z7DKoVh74b').get()
-        .then(doc => {
-            conv.ask(doc.data().word);
-            conv.ask(new HtmlResponse({
-                url: 'https://vocab-project.firebaseapp.com/',
-                data: {
-                    words: doc.data().word
-                }
-            }));
-        });
+    conv.ask('hi, welkom in de vocab app, ben je klaar?');
+    conv.ask(new HtmlResponse({
+        url: 'https://vocab-project.firebaseapp.com/',
+        data: {
+            event: 'WELCOME',
+        },
+    }));
 });
 
-exports.app = functions.https.onRequest(app);
-exports.appD = functions.https.onRequest(appD);
+let index = 0;
+let woorden = [];
+
+app.intent('Begin', conv => {
+    return wordCollection.get().then(snapshot => {
+        snapshot.forEach(woord => {
+            woorden.push(woord.data().word);
+        });
+        conv.ask(woorden[index]);
+        conv.ask(new HtmlResponse({
+            data: {
+                event: 'OEFENEN',
+                woord: woorden[index]
+            }
+        }));
+    });
+});
+
+app.intent('Woordjes', (conv, {gesprokenWoord}) => {
+    console.log('inhoud ', woorden);
+    if(gesprokenWoord !== woorden[index]){
+        //herhaal
+    } else {
+        //verstuur ${index} naar db met ${conv.data.guess}
+        index += 1;
+    }
+    conv.ask(woorden[index]);
+    conv.ask(new HtmlResponse({
+        data: {
+            event: 'OEFENEN',
+            woord: woorden[index]
+        }
+    }));
+});
+
+app.intent('Fallback', conv => {
+    conv.close('Er gaat wat mis');
+});
+
+app.catch((conv, error) => {
+    console.error(error);
+    conv.ask('I encountered a glitch. Can you say that again?');
+});
+
+exports.expressApp = functions.https.onRequest(expressApp);
+exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
