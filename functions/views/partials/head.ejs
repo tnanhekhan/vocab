@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Avenir">
+    <link rel="stylesheet" href="/css/normalize.css"/>
+    <link rel="stylesheet" href="/css/cms.css"/>
+    <title><%= title %></title>
+</head>
+<body>
+<div class="sidenav">
+    <h1>Vocab</h1>
+    <nav>
+        <% switch(dest) {
+        case "dashboard": %>
+        <a id=selected-nav href="/cms">Dashboard</a>
+        <a href="/cms/word-lists">Woordenlijsten</a>
+        <a href="/cms/class-lists">Klassenlijsten</a>
+        <a href="/cms/teacher-chat">Docenten chat</a>
+        <% break;
+
+        case "wordlists": %>
+        <a href="/cms">Dashboard</a>
+        <a id=selected-nav href="/cms/word-lists">Woordenlijsten</a>
+        <a href="/cms/class-lists">Klassenlijsten</a>
+        <a href="/cms/teacher-chat">Docenten chat</a>
+        <% break;
+
+        default: %>
+        <a href="/cms">Dashboard</a>
+        <a href="/cms/word-lists">Woordenlijsten</a>
+        <a href="/cms/class-lists">Klassenlijsten</a>
+        <a href="/cms/teacher-chat">Docenten chat</a>
+        <% break;
+         } %>
+    </nav>
+</div>

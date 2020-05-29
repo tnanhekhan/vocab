@@ -2,7 +2,7 @@ const gulp = require('gulp');
 const replace = require('gulp-replace');
 
 function defaultTask(cb) {
-    gulp.src("functions/index.js")
+    gulp.src("functions/firebase.js")
         .pipe(replace("admin.initializeApp({credential: credential, databaseURL: databaseURL});", "admin.initializeApp();"))
         .pipe(replace("const serviceAccount = require('./admin.json');", ""))
         .pipe(replace("const credential = admin.credential.cert(serviceAccount);", ""))

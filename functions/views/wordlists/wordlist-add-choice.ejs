@@ -1,0 +1,15 @@
+<%- include ("../partials/head.ejs") %>
+
+<main>
+    <h1 class="header">Woordenlijsten</h1>
+    <div class="content">
+        <h2>Woordenlijst naam</h2>
+        <div class="wordlist-add-container">
+            <a href="add-list/manual"><button class="wordlist-item wordlist-add-select">Handmatig invullen</button></a>
+            <label for="file" class="file-input-label">Lijst uploaden</label>
+            <input type="file" name="file" id="file" class="hidden-file-input" title="Lijst Uploaden">
+        </div>
+    </div>
+</main>
+
+<%- include ("../partials/footer.ejs") %>
