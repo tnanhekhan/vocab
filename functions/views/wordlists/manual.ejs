@@ -1,0 +1,17 @@
+<%- include ("../partials/head.ejs") %>
+
+<main>
+    <h1 class="header">Woordenlijsten</h1>
+    <div class="content">
+        <h2>Woordenlijst naam</h2>
+        <div class="wordlists-container">
+            <% for (var i = 0; i < 53; i++) { %>
+                <a href="manual/add-word">
+                    <button class="wordlist-item add">+</button>
+                </a>
+            <% } %>
+        </div>
+    </div>
+</main>
+
+<%- include ("../partials/footer.ejs") %>
