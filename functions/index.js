@@ -1,118 +1,106 @@
 'use strict';
 
+const {
+    dialogflow,
+    HtmlResponse
+} = require("actions-on-google");
+const fb = require("./firebase");
+const db = fb.firestore();
 const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-const serviceAccount = require('./admin.json');
-const {dialogflow,
-    HtmlResponse,
-} = require('actions-on-google');
-
-const appD = dialogflow({debug: true});
-
-const credential = admin.credential.cert(serviceAccount);
-const databaseURL = functions.config().database.url;
-admin.initializeApp({credential: credential, databaseURL: databaseURL});
-
-const db = admin.firestore();
-
-const express = require('express');
-const app = express();
 
 let wordCollection = db.collection('wordlists').doc('wordlist').collection("wordCollection");
 
-app.get("/cms", (req, res) => {
-    res.send(`<!doctype html>
-    <head>
-      <title>CMS</title>
-    </head>
-    <body>
-      </q><a href="/">Home</a>
-      <h1>CMS</h1>
-      <form method="post" >
-        <label for="fname">Word for database</label><br>
-        <input type="text" id="word" name="word" placeholder="Enter a word here:" required><br>
-        <input type="submit" value="Submit Word">
-        </form> 
-    </body>
-  </html>`)
+// Instantiate the Dialogflow client.
+const app = dialogflow({ debug: true });
+
+const createError = require('http-errors');
+const path = require('path');
+const express = require('express');
+const cmsRouter = require('./routes/cms');
+const expressApp = express();
+
+expressApp.set('views', path.join(__dirname, 'views'))
+    .set('view engine', 'ejs')
+    .use(express.static(path.join(__dirname, 'public')))
+    .use(express.json())
+    .use(express.urlencoded({extended: false}))
+    .use('/cms', cmsRouter);
+
+// catch 404 and forward to error handler
+expressApp.use(function (req, res, next) {
+    next(createError(404));
 });
 
-app.post("/cms", (req, res) => {
-    const word = req.body.word;
-    wordCollection.add({word: word, timestamp: Date.now()}).then(ref => {
-        res.send(`<!doctype html>
-            <head>
-            <title>CMS</title>
-            </head>
-            <body>
-                <a href="/">Home</a>
-                <h1>CMS</h1>
-                <h2>Uploaded word : ${word}</h2>
-                 <form method="post" >
-                    <label for="fname">Word for database</label><br>
-                    <input type="text" id="word" name="word" placeholder="Enter a word here:" required><br>
-                    <input type="submit" value="Submit Word">
-                  </form> 
-            </body>
-            </html>`);
-    })
+// error handler
+expressApp.use(function (err, req, res, next) {
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error', {title: "404"});
 });
 
-app.get("/db", (req, res) => {
-    wordCollection.get()
-        .then(snapshot => {
-            let words = [];
-            snapshot.forEach(doc => {
-                words.push(`<li><a href="#" class="database-word" id=${doc.id}>${doc.data().word}</a></li>`)
-            });
-            res.send(`<!doctype html>
-            <head>
-                <title>DB</title>
-            </head>
-            <body>
-                <a href="/">Home</a>
-                <h1>DB</h1>
-                <h2>All inserted words: </h2>
-                <ul>
-                    ${words.map(word => `${word}`).join('')}
-                </ul>
-                <script src="js/db.js"></script>
-            </body>
-            </html>`);
-        })
-        .catch(err => {
-            console.log('Error getting documents', err);
-        });
-});
+const MAX_INCORRECT_GUESSES = 3;
 
-app.post("/db", (req, res) => {
-    const data = JSON.parse(req.body);
-    wordCollection.doc(data.id).delete().then(
-        success => {
-            res.send(data)
-        })
-        .catch(error => {
-            console.log("error failed: " + error)
-        })
-});
-
-appD.intent('welcome', (conv) => {
+app.intent('Welcome', conv => {
     if(!conv.surface.capabilities.has('actions.capability.INTERACTIVE_CANVAS')){
         conv.close('sorrie, dit apparaat kan deze app niet ondersteunen');
         return;
     }
-    conv.ask('hi, welkom in de vocab app');
-    return wordCollection.doc('Xw957bRoA6Z7DKoVh74b').get()
-        .then(doc => {
-            conv.ask(doc.data().word);
-            conv.ask(new HtmlResponse({
-                url: 'https://vocab-project.firebaseapp.com/',
-                data: {
-                    words: doc.data().word
-                }
-            }));
-        });
+    conv.ask('hi, welkom in de vocab app, ben je klaar?');
+    conv.ask(new HtmlResponse({
+        url: 'https://vocab-project.firebaseapp.com/',
+        data: {
+            event: 'WELCOME',
+        },
+    }));
 });
 
-exports.app = functions.https.onRequest(app);
-exports.appD = functions.https.onRequest(appD);
+let index = 0;
+let woorden = [];
+
+app.intent('Begin', conv => {
+    return wordCollection.get().then(snapshot => {
+        snapshot.forEach(woord => {
+            woorden.push(woord.data().word);
+        });
+        conv.ask(woorden[index]);
+        conv.ask(new HtmlResponse({
+            data: {
+                event: 'OEFENEN',
+                woord: woorden[index]
+            }
+        }));
+    });
+});
+
+app.intent('Woordjes', (conv, {gesprokenWoord}) => {
+    console.log('inhoud ', woorden);
+    if(gesprokenWoord !== woorden[index]){
+        //herhaal
+    } else {
+        //verstuur ${index} naar db met ${conv.data.guess}
+        index += 1;
+    }
+    conv.ask(woorden[index]);
+    conv.ask(new HtmlResponse({
+        data: {
+            event: 'OEFENEN',
+            woord: woorden[index]
+        }
+    }));
+});
+
+app.intent('Fallback', conv => {
+    conv.close('Er gaat wat mis');
+});
+
+app.catch((conv, error) => {
+    console.error(error);
+    conv.ask('I encountered a glitch. Can you say that again?');
+});
+
+exports.expressApp = functions.https.onRequest(expressApp);
+exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);

@@ -3,7 +3,7 @@ for (let i = 0; i < elements.length; i++) {
     if (elements[i].className === "database-word") {
         elements[i].onclick = ev => {
             const data = {id: ev.target.id};
-            fetch("/db", {
+            fetch("/cms/db", {
                 method: "POST",
                 body: JSON.stringify(data)
             }).then(response => response.json())
