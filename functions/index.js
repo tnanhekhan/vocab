@@ -11,7 +11,7 @@ const functions = require('firebase-functions');
 let wordCollection = db.collection('wordlists').doc('wordlist').collection("wordCollection");
 
 // Instantiate the Dialogflow client.
-const app = dialogflow({ debug: true });
+const app = dialogflow({debug: true});
 
 const createError = require('http-errors');
 const path = require('path');
@@ -45,7 +45,7 @@ expressApp.use(function (err, req, res, next) {
 const MAX_INCORRECT_GUESSES = 3;
 
 app.intent('Welcome', conv => {
-    if(!conv.surface.capabilities.has('actions.capability.INTERACTIVE_CANVAS')){
+    if (!conv.surface.capabilities.has('actions.capability.INTERACTIVE_CANVAS')) {
         conv.close('sorrie, dit apparaat kan deze app niet ondersteunen');
         return;
     }
@@ -77,20 +77,32 @@ app.intent('Begin', conv => {
 });
 
 app.intent('Woordjes', (conv, {gesprokenWoord}) => {
-    console.log('inhoud ', woorden);
-    if(gesprokenWoord !== woorden[index]){
-        //herhaal
+    console.log('index ', index, ' ', woorden.length - 1);
+    if (index === woorden.length-1) {
+        console.log('einde');
+        conv.close('Goed gedaan!');
+        conv.ask(new HtmlResponse({
+            data: {
+                event: 'KLAAR'
+            }
+        }));
     } else {
-        //verstuur ${index} naar db met ${conv.data.guess}
-        index += 1;
-    }
-    conv.ask(woorden[index]);
-    conv.ask(new HtmlResponse({
-        data: {
-            event: 'OEFENEN',
-            woord: woorden[index]
+        console.log('inhoud ', woorden);
+        if (gesprokenWoord !== woorden[index]) {
+            //herhaal
+        } else {
+            //verstuur ${index} naar db met ${conv.data.guess}
+            index += 1;
         }
-    }));
+
+        conv.ask(woorden[index]);
+        conv.ask(new HtmlResponse({
+            data: {
+                event: 'OEFENEN',
+                woord: woorden[index]
+            }
+        }));
+    }
 });
 
 app.intent('Fallback', conv => {

@@ -28,6 +28,9 @@ function updateCanvas(data){
             case 'WELCOME':
                 showWoord('welkom');
                 break;
+            case 'KLAAR':
+                showWoord('Klaar');
+                break;
         }
     }
 }
