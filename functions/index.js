@@ -17,6 +17,7 @@ const createError = require('http-errors');
 const path = require('path');
 const express = require('express');
 const cmsRouter = require('./routes/cms');
+const wordListsRouter = require('./routes/word-lists');
 const expressApp = express();
 
 expressApp.set('views', path.join(__dirname, 'views'))
@@ -24,7 +25,8 @@ expressApp.set('views', path.join(__dirname, 'views'))
     .use(express.static(path.join(__dirname, 'public')))
     .use(express.json())
     .use(express.urlencoded({extended: false}))
-    .use('/cms', cmsRouter);
+    .use('/cms', cmsRouter)
+    .use('/cms/word-lists', wordListsRouter);
 
 // catch 404 and forward to error handler
 expressApp.use(function (req, res, next) {
