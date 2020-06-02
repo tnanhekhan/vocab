@@ -1,7 +1,16 @@
 const fb = require("../firebase");
+const bucket = fb.storage().bucket();
 const db = fb.firestore();
 
 exports.getWords = (req, res) => {
+    async function getImages(id) {
+        try {
+            return await bucket.file(id).get();
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     db.collection("wordlists").doc(req.params.listId).get()
         .then(snapshot => {
             const listName = snapshot.data().name;
@@ -12,13 +21,29 @@ exports.getWords = (req, res) => {
                         .then(snapshot => {
                             return snapshot.docs;
                         })
-                        .then(words => {
-                            res.render("wordlists/words", {
-                                title: "CMS",
-                                dest: "wordlists",
-                                words: words,
-                                listId: req.params.listId,
-                                listName: listName
+                        .then(wordDocs => {
+                            const images = wordDocs.map(word => {
+                                return getImages(word.id);
+                            });
+
+                            Promise.all(images).then(result => {
+                                const filteredImages = result.filter(el => {
+                                    return el != null;
+                                });
+
+                                const images = [];
+                                filteredImages.forEach(filteredImage => {
+                                    images.push({id: filteredImage[1].name, url: filteredImage[1].mediaLink});
+                                });
+
+                                res.render("wordlists/words", {
+                                    title: "CMS",
+                                    dest: "wordlists",
+                                    words: wordDocs,
+                                    images: images,
+                                    listId: req.params.listId,
+                                    listName: listName
+                                });
                             });
                         })
                 });

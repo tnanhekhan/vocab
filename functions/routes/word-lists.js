@@ -48,12 +48,12 @@ router.post("/:listId/add", (req, res) => {
 });
 
 // Routes to the word detail page of a word that already exists
-router.get("/:listId/:wordId", (req, res, next) => {
+router.get("/:listId/:wordId", (req, res) => {
     wordController.getWord(req, res)
 });
 
 // Redirect logic for updating an existing word
-router.post("/:listId/:wordId", (req, res, next) => {
+router.post("/:listId/:wordId", (req, res) => {
     wordController.updateWord(req, res);
 });
 

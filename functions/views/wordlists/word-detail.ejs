@@ -12,7 +12,31 @@
                 <input class="form-button delete-button" name="delete-word" type="submit" value="Verwijderen">
             <% } %>
         </form>
+        <form id="image-form" method="post" enctype="multipart/form-data">
+            <% if(hasImage){ %>
+                <img src="<%= image %>" id="image-preview" width="25%">
+            <% }else{ %>
+                <img id="image-preview" width="25%">
+            <% } %>
+            <label for="word-image" class="file-input-label">Afbeelding Toevoegen</label>
+            <input type="file" accept=".png, .jpeg, .jpg" name="word-image" id="word-image"
+                   class="hidden-file-input" title="Afbeelding Toevoegen" required>
+            <input class="form-button success-button" name="save-image" type="submit" value="Afbeelding Uploaden">
+        </form>
     </div>
 </main>
+<script>
+    document.getElementById("word-image").onchange = function () {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            // get loaded data and render thumbnail.
+            document.getElementById("image-preview").src = e.target.result;
+        };
+
+        // read the image file as a data URL.
+        reader.readAsDataURL(this.files[0]);
+    };
+</script>
 
 <%- include ("../partials/footer.ejs") %>s

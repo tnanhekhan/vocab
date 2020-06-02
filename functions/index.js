@@ -14,6 +14,7 @@ let wordCollection = db.collection('wordlists').doc('wordlist').collection("word
 const app = dialogflow({debug: true});
 
 const createError = require('http-errors');
+const fileMiddleware = require('express-multipart-file-parser')
 const path = require('path');
 const express = require('express');
 const cmsRouter = require('./routes/cms');
@@ -22,9 +23,10 @@ const expressApp = express();
 
 expressApp.set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
+    .use(fileMiddleware)
     .use(express.static(path.join(__dirname, 'public')))
     .use(express.json())
-    .use(express.urlencoded({extended: false}))
+    .use(express.urlencoded({extended: true}))
     .use('/cms', cmsRouter)
     .use('/cms/word-lists', wordListsRouter);
 

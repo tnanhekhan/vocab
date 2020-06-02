@@ -1,6 +1,5 @@
 const fb = require("../firebase");
 const db = fb.firestore();
-const repo = require("../data/wordlists-repository");
 
 // Routes to the all the word lists
 exports.getWordLists = (req, res) => {
