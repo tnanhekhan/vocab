@@ -4,6 +4,7 @@ html {
 }
 
 .view {
+    display: grid;
     position: fixed;
     top: 50%;
     left: 50%;

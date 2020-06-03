@@ -1,15 +1,14 @@
 'use strict';
 
 const functions = require('firebase-functions');
-
-//import dialogflow app
-const app = require('./dialogflowApp');
-
 const createError = require('http-errors');
 const path = require('path');
 const express = require('express');
 const cmsRouter = require('./routes/cms');
 const expressApp = express();
+
+//import dialogflow app
+const app = require('./dialogflowApp');
 
 expressApp.set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
