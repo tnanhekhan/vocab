@@ -2,8 +2,10 @@ const {
     dialogflow,
     HtmlResponse
 } = require("actions-on-google");
-const fb = require("./firebase");
-const db = fb.firestore();
+const fbConfig = require("./firebase");
+const db = fbConfig.firestore();
+const bucket = fbConfig.storage().bucket();
+
 const app = dialogflow({debug: true});
 
 const MAX_INCORRECT_GUESSES = 3;
