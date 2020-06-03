@@ -2,9 +2,11 @@
 
 const functions = require('firebase-functions');
 const createError = require('http-errors');
+const fileMiddleware = require('express-multipart-file-parser')
 const path = require('path');
 const express = require('express');
 const cmsRouter = require('./routes/cms');
+const wordListsRouter = require('./routes/word-lists');
 const expressApp = express();
 
 //import dialogflow app
@@ -12,10 +14,12 @@ const app = require('./dialogflowApp');
 
 expressApp.set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
+    .use(fileMiddleware)
     .use(express.static(path.join(__dirname, 'public')))
     .use(express.json())
-    .use(express.urlencoded({extended: false}))
-    .use('/cms', cmsRouter);
+    .use(express.urlencoded({extended: true}))
+    .use('/cms', cmsRouter)
+    .use('/cms/word-lists', wordListsRouter);
 
 // catch 404 and forward to error handler
 expressApp.use(function (req, res, next) {
