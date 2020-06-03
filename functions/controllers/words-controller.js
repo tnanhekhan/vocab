@@ -48,7 +48,7 @@ exports.getWords = (req, res) => {
                         })
                 });
         });
-}
+};
 
 exports.updateWords = (req, res) => {
     function insertWords(req, res) {
@@ -74,4 +74,4 @@ exports.updateWords = (req, res) => {
     } else {
         res.redirect("/cms/word-lists");
     }
-}
+};
