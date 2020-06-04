@@ -13,8 +13,13 @@ router.get('/', (req, res) => {
 });
 
 // Routes to the the word list choice screen between manual or load a file
-router.get('/add-list', (req, res, next) => {
+router.get('/add-list', (req, res) => {
     wordListsController.getAddWordListModal(req, res);
+});
+
+// Redirect logic when uploading a word list
+router.post('/add-list', (req, res) => {
+    wordListsController.getUploadedAddWordList(req, res)
 });
 
 // Routes to the the manual word list screen
