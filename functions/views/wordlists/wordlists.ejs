@@ -6,12 +6,12 @@
         <h2>Thema's</h2>
         <div class="wordlists-container">
             <% wordLists.forEach(wordlist => { %>
-                <a href="word-lists/<%= wordlist.id %>">
+                <a class="square-link" href="word-lists/<%= wordlist.id %>">
                     <button class="wordlist-item"><%= wordlist.data().name %></button>
                 </a>
             <% }); %>
             <% for (var i = 0; i < 53; i++) { %>
-                <a href="word-lists/add-list">
+                <a class="square-link" href="word-lists/add-list">
                     <button class="wordlist-item add">+</button>
                 </a>
             <% } %>
