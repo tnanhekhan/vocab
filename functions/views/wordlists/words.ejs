@@ -21,12 +21,23 @@
             <% if(listName.length != 0) { %>
                 <% words.sort((a, b) => (a.data().timestamp > b.data().timestamp) ? 1 : ((b.data().timestamp > a.data().timestamp) ? -1 : 0)) %>
                 <% words.forEach(word => { %>
-                    <a href="<%= listId %>/<%= word.id %>">
-                        <button class="wordlist-item"><%= word.data().word %></button>
-                    </a>
+                    <% let imageIds = images.map(a => a.id); %>
+                    <% if (imageIds.indexOf(word.id) !== -1){ %>
+                        <a class="square-link" href="<%= listId %>/<%= word.id %>">
+                            <button class="wordlist-item">
+                                <img src="<%= images[imageIds.indexOf(word.id)].url %>" width="80%">
+                                <%= word.data().word %></button>
+                        </a>
+                    <% }else{ %>
+                        <a class="square-link" href="<%= listId %>/<%= word.id %>">
+                            <button class="wordlist-item">
+                                <img src="/img/150.png" width="80%">
+                                <%= word.data().word %></button>
+                        </a>
+                    <% } %>
                 <% }); %>
                 <% for (var i = 0; i < 53; i++) { %>
-                    <a href="<%= listId %>/add">
+                    <a class="square-link" href="<%= listId %>/add">
                         <button class="wordlist-item add">+</button>
                     </a>
                 <% } %>

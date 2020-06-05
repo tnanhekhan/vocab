@@ -4,4 +4,5 @@ const serviceAccount = require('./admin.json');
 
 const credential = admin.credential.cert(serviceAccount);
 const databaseURL = functions.config()/*.database.url*/;
-module.exports = admin.initializeApp({credential: credential, databaseURL: databaseURL});
+const storageBucket = functions.config().storage.url;
+module.exports = admin.initializeApp({credential: credential, databaseURL: databaseURL, storageBucket: storageBucket});
