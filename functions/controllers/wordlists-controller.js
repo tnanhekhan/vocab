@@ -1,4 +1,5 @@
 const fb = require("../firebase");
+const xlsx = require('xlsx');
 const db = fb.firestore();
 
 // Routes to the all the word lists
@@ -50,6 +51,33 @@ exports.getManualAddWordList = (req, res) => {
         });
 };
 
+exports.getUploadedAddWordList = (req, res) => {
+    const {
+        mimetype,
+        buffer,
+    } = req.files[0]
+    const workBook = xlsx.read(buffer, {type: "buffer"});
+    const worksheetArray = xlsx.utils.sheet_to_json(workBook.Sheets[Object.keys(workBook.Sheets)]);
+    const uploadedWordList = worksheetArray.map(field => {
+        return {word: field[Object.keys(field)], timestamp: Date.now()};
+    });
+    uploadedWordList.unshift({word: Object.keys(worksheetArray[0])[0], timestamp: uploadedWordList[0].timestamp});
+
+    db.collection("wordlists").add({name: "Geüploade Lijst", created: Date.now()})
+        .then(docRef => {
+            let batch = db.batch();
+            uploadedWordList.forEach(word => {
+                batch.set(db.collection("wordlists").doc(docRef.id).collection("wordcollection").doc(), word);
+            });
+            return {batch: batch, id: docRef.id};
+        })
+        .then(result => {
+            result.batch.commit()
+                .then(() => {
+                    res.redirect(`/cms/word-lists/${result.id}`);
+                });
+        });
+}
 
 // Redirect logic when creating a word list manually
 exports.updateManualAddWordList = (req, res) => {

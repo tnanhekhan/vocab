@@ -5,9 +5,15 @@
     <div class="content">
         <h2>Woordenlijst naam</h2>
         <div class="wordlist-add-container">
-            <a href="add-list/manual"><button class="wordlist-item wordlist-add-select">Handmatig invullen</button></a>
-            <label for="file" class="file-input-label">Lijst uploaden</label>
-            <input type="file" name="file" id="file" class="hidden-file-input" title="Lijst Uploaden">
+            <a class="square-link" href="add-list/manual">
+                <button class="wordlist-item wordlist-add-select">Handmatig invullen</button>
+            </a>
+            <form method="post" enctype="multipart/form-data">
+                <label for="file" class="file-input-label">Selecteer een lijst</label>
+                <input type="file" accept=".xlsx, .xls, .csv" name="file" id="file" class="hidden-file-input"
+                       title="Selecteer een lijst" required>
+                <input class="form-button success-button" name="save-image" type="submit" value="Lijst Uploaden">
+            </form>
         </div>
     </div>
 </main>

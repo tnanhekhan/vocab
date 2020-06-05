@@ -156,7 +156,7 @@ main {
     font-size: 18px;
     cursor: pointer;
 }
-
+/**/
 .success-button {
     background-color: #0aa304;
 }
@@ -172,4 +172,8 @@ main {
 #image-form {
     display: flex;
     justify-content: space-evenly;
+}
+
+.square-link {
+    text-decoration: none;
 }
