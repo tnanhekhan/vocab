@@ -19,7 +19,7 @@ app.intent('Welcome', conv => {
     }
     conv.ask('hi, welkom in de vocab app, ben je klaar?');
     conv.ask(new HtmlResponse({
-        url: 'https://vocab-project.firebaseapp.com/',
+        url: 'https://vocab-project.web.app/',
         data: {
             event: 'WELCOME',
         },
@@ -30,43 +30,74 @@ let index = 0;
 let woorden = [];
 
 app.intent('Begin', conv => {
+    let data = [];
     return wordCollection.get().then(snapshot => {
         snapshot.forEach(woord => {
-            woorden.push(woord.data().word);
+            data.push(woord)
         });
-        conv.ask(woorden[index]);
-        conv.ask(new HtmlResponse({
-            data: {
-                event: 'OEFENEN',
-                woord: woorden[index]
+        woorden = data.map(woord => {
+            return {
+                id: woord.id,
+                woord: woord.data().word
             }
-        }));
+        });
+        return bucket.file(woorden[index].id).get()
+            .then(result => {
+                conv.ask(woorden[index].woord);
+                conv.ask(new HtmlResponse({
+                    data: {
+                        event: 'OEFENEN',
+                        woord: woorden[index].woord,
+                        plaatje: result[1].mediaLink
+                    }
+                }));
+            })
+            .catch(e => {
+                conv.ask(woorden[index].woord);
+                conv.ask(new HtmlResponse({
+                    data: {
+                        event: 'OEFENEN',
+                        woord: woorden[index].woord
+                    }
+                }));
+            });
     });
 });
 
 app.intent('Woordjes', (conv, {gesprokenWoord}) => {
     if (index === woorden.length-1) {
-        conv.close('Goed gedaan!');
+        conv.ask('Goed gedaan!');
         conv.ask(new HtmlResponse({
             data: {
                 event: 'KLAAR'
             }
         }));
+        conv.close();
     } else {
-        if (gesprokenWoord !== woorden[index]) {
+        if (gesprokenWoord.toLowerCase() !== woorden[index].woord.toLowerCase()) {
             //herhaal
         } else {
-            //verstuur ${index} naar db met ${conv.data.guess}
             index += 1;
         }
-
-        conv.ask(woorden[index]);
-        conv.ask(new HtmlResponse({
-            data: {
-                event: 'OEFENEN',
-                woord: woorden[index]
-            }
-        }));
+        return bucket.file(woorden[index].id).get()
+            .then(result => {
+                conv.ask(woorden[index].woord);
+                conv.ask(new HtmlResponse({
+                    data: {
+                        event: 'OEFENEN',
+                        woord: woorden[index].woord,
+                        plaatje: result[1].mediaLink
+                    }
+                }));
+            }).catch(e => {
+                conv.ask(woorden[index].woord);
+                conv.ask(new HtmlResponse({
+                    data: {
+                        event: 'OEFENEN',
+                        woord: woorden[index].woord
+                    }
+                }));
+            });
     }
 });
 
@@ -76,7 +107,7 @@ app.intent('Fallback', conv => {
 
 app.catch((conv, error) => {
     console.error(error);
-    conv.ask('I encountered a glitch. Can you say that again?');
+    conv.ask('Er gaat iets mis, zou je dat kunnen herhalen?');
 });
 
 module.exports = app;
