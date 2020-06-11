@@ -8,8 +8,6 @@ const bucket = fbConfig.storage().bucket();
 
 const app = dialogflow({debug: true});
 
-const MAX_INCORRECT_GUESSES = 3;
-
 let wordCollection = db.collection('wordlists').doc('wordlist').collection("wordCollection");
 
 app.intent('Welcome', conv => {
@@ -64,19 +62,40 @@ app.intent('Begin', conv => {
     });
 });
 
+function sendProgress(completedWords, difficultWords){
+    const progress = db.collection('progression').doc('J0Ijqla8aZG6HC9CRIYp')
+        .update({
+            wordsCompleted: completedWords,
+            stdnt: 'n9lFtuniXq9yR4LpdN3f',
+            moeilijkeWoorden: difficultWords
+        });
+}
+
+const moeilijkeWoorden = [];
+let incorrect_guesses = 0;
+let woord = '';
+
 app.intent('Woordjes', (conv, {gesprokenWoord}) => {
+    console.log('index', index, ' woord ', woorden.length-1)
     if (index === woorden.length-1) {
         conv.ask('Goed gedaan!');
-        conv.ask(new HtmlResponse({
+        sendProgress(20,moeilijkeWoorden);
+        conv.close(new HtmlResponse({
             data: {
                 event: 'KLAAR'
             }
         }));
-        conv.close();
     } else {
-        if (gesprokenWoord.toLowerCase() !== woorden[index].woord.toLowerCase()) {
-            //herhaal
+        if ((gesprokenWoord.toLowerCase() !== woorden[index].woord.toLowerCase())&&(incorrect_guesses < 3)) {
+            incorrect_guesses += 1;
+            woord = {word: woorden[index].woord, tries: incorrect_guesses};
         } else {
+            console.log('hier', woorden[index].woord , ' index ', index);
+            if(woord !== ""){
+                moeilijkeWoorden.push(woord);
+            }
+            woord = "";
+            incorrect_guesses = 0;
             index += 1;
         }
         return bucket.file(woorden[index].id).get()
@@ -103,11 +122,6 @@ app.intent('Woordjes', (conv, {gesprokenWoord}) => {
 
 app.intent('Fallback', conv => {
     conv.close('Er gaat wat mis');
-});
-
-app.catch((conv, error) => {
-    console.error(error);
-    conv.ask('Er gaat iets mis, zou je dat kunnen herhalen?');
 });
 
 module.exports = app;

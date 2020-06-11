@@ -1,4 +1,4 @@
-const fb = require("../firebase");
+const fb = require("../../firebase");
 const xlsx = require('xlsx');
 const db = fb.firestore();
 
@@ -23,7 +23,7 @@ exports.getWordLists = (req, res) => {
 
 // Routes to the the word list choice screen between manual or load a file
 exports.getAddWordListModal = (req, res) => {
-    res.render("wordlists/wordlist-add-choice", {title: "CMS", dest: "wordlists"});
+    res.render("wordlists/classlist-add-options", {title: "CMS", dest: "wordlists"});
 }
 
 // Routes to the the manual word list screen

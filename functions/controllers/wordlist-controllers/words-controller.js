@@ -1,4 +1,4 @@
-const fb = require("../firebase");
+const fb = require("../../firebase");
 const bucket = fb.storage().bucket();
 const db = fb.firestore();
 

@@ -3,9 +3,9 @@ const fb = require("../firebase");
 const db = fb.firestore();
 const router = express.Router();
 
-const wordListsController = require("../controllers/wordlists-controller")
-const wordsController = require("../controllers/words-controller");
-const wordController = require("../controllers/word-controller");
+const wordListsController = require("../controllers/wordlist-controllers/wordlists-controller");
+const wordsController = require("../controllers/wordlist-controllers/words-controller");
+const wordController = require("../controllers/wordlist-controllers/word-controller");
 
 // Routes to the all the word lists
 router.get('/', (req, res) => {

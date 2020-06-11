@@ -38,47 +38,34 @@ function updateCanvas(data) {
     }
 }
 
-/*function turnOfScreens(screens){
-    screens.forEach(screen => {
-        document.getElementById(screen).style.display = "none";
-    });
-}*/
-
 function showWelcome() {
-    let woordjes = document.getElementById('woordjes');
-    woordjes.innerHTML = `<h1 id="greeting">Welcome</h1>`;
+    let welkom = document.getElementById('woordjes');
+    welkom.innerHTML = `<h1 id="greeting">Welkom!</h1>`;
 }
 
-/*function showGoodbye() {
-    turnOfScreens(['welcome','woordjes']);
-    const goodbye = document.querySelector("goodbye");
-    goodbye.innerHTML = `<h1>Tot de volgende keer!</h1>`;
-}*/
-
-function display(screen) {
-    document.getElementById(screen).style.display = "block";
-}
-
-function hide(screen) {
-    document.getElementById(screen).style.display = "none";
+function showGoodbye() {
+    let groet = document.getElementById('woordjes');
+    groet.innerHTML = '';
+    groet.innerHTML = `<h1 id="goodbye">Totziens!</h1>`;
 }
 
 function displayWoordjes(){
     let woordjes = document.getElementById('woordjes');
     woordjes.innerHTML = '';
     woordjes.innerHTML =
-        `<h1 id="woord"></h1>
+        `<div id="word-container"></div>
         <div id="image-container"></div>`;
 }
 
 function woordjes(data) {
-    let word = document.getElementById('woord');
+    let wordContainer = document.getElementById('word-container');
     let imageContainer = document.getElementById('image-container');
     if(data.plaatje !== undefined){
-        imageContainer.innerHTML = `<img id="image" src="${data.plaatje}">`;
+        imageContainer.innerHTML = `<img src="${data.plaatje}">`;
     } else {
         imageContainer.innerHTML = '';
     }
-    word.innerHTML = data.woord;
+
+    wordContainer.innerHTML = `<h1>${data.woord}</h1>`;
 }
 
