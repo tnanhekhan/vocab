@@ -185,3 +185,12 @@ main {
 .red-letter{
     color: #fe3c2f;
 }
+
+.login-form{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 64px;
+    padding: 16px;
+}

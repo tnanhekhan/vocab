@@ -1,6 +1,4 @@
 const repo = require("../data/word-repository");
-const fb = require("../firebase");
-const bucket = fb.storage().bucket();
 
 exports.getNewWord = (req, res) => {
     res.render("wordlists/word-detail", {

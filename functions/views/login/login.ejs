@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/normalize.css"/>
+    <link rel="stylesheet" href="/css/cms.css"/>
+    <title><%= title %></title>
+</head>
+<body>
+
+<div id="login-form" class="login-form">
+    <h1><span>v</span><span class="red-letter">o</span><span>c</span><span class="red-letter">a</span><span>b</span>
+    </h1>
+    <input id="username-input" class="form-input" type="email" placeholder="e-mail" name="user" required>
+    <input id="password-input" class="form-input" type="password" placeholder="wachtwoord" name="pass" autocomplete="on"
+           required>
+    <button id="login-button" class="form-button success-button">inloggen</button>
+</div>
+
+<%- include ("../partials/footer.ejs") %>

@@ -1,11 +1,20 @@
 const express = require('express');
-const fb = require("../firebase");
-const db = fb.firestore();
 const router = express.Router();
+
+const loginController = require('../controllers/login/login-controller')
 
 // Routes to the dashboard
 router.get("/", (req, res, next) => {
-    res.render("dashboard/dashboard", {title: "CMS", dest: "dashboard"});
+    loginController.getLogin(req, res);
 });
+
+// Routes to the dashboard
+router.post("/", (req, res, next) => {
+    loginController.validateLogin(req, res);
+});
+
+router.get("/dashboard", (req, res) => {
+    res.render("dashboard/dashboard", {title: "CMS", dest: "dashboard"});
+})
 
 module.exports = router;
