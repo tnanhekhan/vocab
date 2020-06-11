@@ -24,6 +24,10 @@ body {
     padding-top: 32px;
 }
 
+.sidenav h1{
+    font-family: Verdana, sans-serif;
+}
+
 #selected-nav {
     color: #fe3c2f;
     padding: 48px 48px 48px 48px;
@@ -176,4 +180,8 @@ main {
 
 .square-link {
     text-decoration: none;
+}
+
+.red-letter{
+    color: #fe3c2f;
 }

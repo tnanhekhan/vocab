@@ -19,7 +19,7 @@ router.get('/add-list', (req, res) => {
 
 // Redirect logic when uploading a word list
 router.post('/add-list', (req, res) => {
-    wordListsController.getUploadedAddWordList(req, res)
+    wordListsController.insertUploadedWordList(req, res)
 });
 
 // Routes to the the manual word list screen
