@@ -62,12 +62,13 @@ app.intent('Begin', conv => {
     });
 });
 
-function sendProgress(completedWords, difficultWords){
+function sendProgress(completedWords, difficultWords, woordenlijst){
     const progress = db.collection('progression').doc('J0Ijqla8aZG6HC9CRIYp')
         .update({
             wordsCompleted: completedWords,
             stdnt: 'n9lFtuniXq9yR4LpdN3f',
-            moeilijkeWoorden: difficultWords
+            moeilijkeWoorden: difficultWords,
+            woordenlijst: woordenlijst
         });
 }
 
@@ -79,7 +80,7 @@ app.intent('Woordjes', (conv, {gesprokenWoord}) => {
     console.log('index', index, ' woord ', woorden.length-1)
     if (index === woorden.length-1) {
         conv.ask('Goed gedaan!');
-        sendProgress(20,moeilijkeWoorden);
+        sendProgress(20,moeilijkeWoorden, 'list one');
         conv.close(new HtmlResponse({
             data: {
                 event: 'KLAAR'

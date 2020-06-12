@@ -1,67 +1,38 @@
-const fb = require("../../firebase");
-const bucket = fb.storage().bucket();
-const db = fb.firestore();
+const repo = require("../../data/words-repository");
 
 exports.getWords = (req, res) => {
-    async function getImages(id) {
-        try {
-            return await bucket.file(id).get();
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-    db.collection("wordlists").doc(req.params.listId).get()
-        .then(snapshot => {
-            const listName = snapshot.data().name;
-            db.collection("wordlists").doc(req.params.listId).listCollections()
-                .then(collections => {
-                    const collectionId = collections[0].id;
-                    db.collection("wordlists").doc(req.params.listId).collection(collectionId).get()
-                        .then(snapshot => {
-                            return snapshot.docs;
-                        })
-                        .then(wordDocs => {
-                            const images = wordDocs.map(word => {
-                                return getImages(word.id);
-                            });
-
-                            Promise.all(images).then(result => {
-                                const filteredImages = result.filter(el => {
-                                    return el != null;
-                                });
-
-                                const images = [];
-                                filteredImages.forEach(filteredImage => {
-                                    images.push({id: filteredImage[1].name, url: filteredImage[1].mediaLink});
-                                });
-
-                                res.render("wordlists/words", {
-                                    title: "CMS",
-                                    dest: "wordlists",
-                                    words: wordDocs,
-                                    images: images,
-                                    listId: req.params.listId,
-                                    listName: listName
-                                });
-                            });
-                        })
+    repo.getWords(req.params.listId)
+        .then(result => {
+            if (!(typeof result === "string" || result instanceof String)) {
+                res.render("wordlists/words", {
+                    title: "CMS",
+                    dest: "wordlists",
+                    words: result.words,
+                    images: result.images,
+                    listId: req.params.listId,
+                    listName: result.listName
                 });
+            } else {
+                res.render("wordlists/words", {
+                    title: "CMS",
+                    dest: "wordlists",
+                    listId: req.params.listId,
+                    listName: result
+                });
+            }
         });
 };
 
 exports.updateWords = (req, res) => {
     function insertWords(req, res) {
-        db.collection("wordlists").doc(req.params.listId)
-            .update({name: req.body.listName})
+        repo.insertWords(req.params.listId, req.body.listName)
             .then(() => {
                 res.redirect("/cms/word-lists");
             });
     }
 
     function deleteWords(req, res) {
-        db.collection("wordlists").doc(req.params.listId)
-            .delete()
+        repo.deleteWords(req.params.listId)
             .then(() => {
                 res.redirect("/cms/word-lists");
             });

@@ -44,13 +44,17 @@ exports.getStudent = (req, res) => {
                 .then(studentProgress => {
                     let data = studentProgress.map(data => {
                         return {
-                            moeilijkeWoorden: data.data().moeilijkeWoorden
+                            moeilijkeWoorden: data.data().moeilijkeWoorden,
+                            lijst: data.data().woordenlijst
                         }
                     });
                     res.render('classlists/student-detail', {
+                        title: "CMS",
+                        dest: "classlists",
                         firstname: student.data().firstname,
-                        lastname: student.data().firstname,
+                        lastname: student.data().surname,
                         moeite: data[0].moeilijkeWoorden,
+                        lijst: data[0].lijst
                     });
                 })
         });
