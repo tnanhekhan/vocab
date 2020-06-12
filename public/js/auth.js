@@ -1,5 +1,3 @@
-firebase.initializeApp(firebaseConfig);
-
 document.getElementById("login-button").onclick = ev => {
     const usernameInput = document.getElementById("username-input");
     const passwordInput = document.getElementById("password-input");
