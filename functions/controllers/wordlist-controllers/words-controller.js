@@ -1,4 +1,4 @@
-const repo = require("../data/words-repository");
+const repo = require("../../data/words-repository");
 
 exports.getWords = (req, res) => {
     repo.getWords(req.params.listId)

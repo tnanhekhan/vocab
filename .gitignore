@@ -199,4 +199,5 @@ tmp/
 temp/
 
 /functions/admin.json
+/functions/firebase.js
 # End of https://www.gitignore.io/api/node,dotenv,intellij

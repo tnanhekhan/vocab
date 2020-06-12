@@ -1,0 +1,22 @@
+<%- include ("../partials/head.ejs") %>
+
+<main>
+    <h1 class="header">Studentenlijst</h1>
+    <div class="content">
+        <h2>Klassenlijst</h2>
+        <div class="wordlists-container">
+            <% klas.forEach(klas => { %>
+                <a class="square-link" href="class-lists/<%= klas.id %>">
+                    <button class="student-item"><%= klas.data().naam %></button>
+                </a>
+            <% }); %>
+            <% for (var i = 0; i < 53; i++) { %>
+                <a class="square-link" href="class-lists/add-class">
+                    <button class="wordlist-item add">+</button>
+                </a>
+            <% } %>
+        </div>
+    </div>
+</main>
+
+<%- include ("../partials/footer.ejs") %>

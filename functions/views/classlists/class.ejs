@@ -1,0 +1,26 @@
+<%- include ("../partials/head.ejs") %>
+
+<main>
+    <h1 class="header"><%= klas %></h1>
+    <div class="content">
+        <h2>Klassenlijst</h2>
+        <div class="students-container">
+            <% if(klas.length != 0) { %>
+                <% studenten.forEach(student => { %>
+                        <a class="square-link" href="<%= klasId %>/<%= student.id %>">
+                            <button class="wordlist-item">
+                                <img src="/img/150.png" width="80%">
+                                <%= student.data().firstname +' '+ student.data().surname%></button>
+                        </a>
+                    <% }) %>
+                <% for (var i = 0; i < 53; i++) { %>
+                    <a class="square-link" href="<%= klasId %>/add">
+                        <button class="wordlist-item add">+</button>
+                    </a>
+                <% } %>
+            <% } %>
+        </div>
+    </div>
+</main>
+
+<%- include ("../partials/footer.ejs") %>

@@ -1,4 +1,4 @@
-const repo = require("../data/wordlists-repository");
+const repo = require("../../data/wordlists-repository");
 const xlsx = require('xlsx');
 
 // Routes to the all the word lists
