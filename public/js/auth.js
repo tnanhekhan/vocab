@@ -1,6 +1,4 @@
-fetch('/__/firebase/init.json').then(async response => {
-    firebase.initializeApp(await response.json());
-});
+firebase.initializeApp(firebaseConfig);
 
 document.getElementById("login-button").onclick = ev => {
     const usernameInput = document.getElementById("username-input");
