@@ -1,4 +1,10 @@
-firebase.initializeApp(firebaseConfig);
+firebase.auth().onAuthStateChanged(user => {
+    if (!user) {
+        if (window.location.pathname !== "/cms") {
+            window.location.href = "/cms";
+        }
+    }
+});
 
 document.getElementById("login-button").onclick = ev => {
     const usernameInput = document.getElementById("username-input");
@@ -10,6 +16,12 @@ document.getElementById("login-button").onclick = ev => {
         } else {
             firebase.auth()
                 .signInWithEmailAndPassword(usernameInput.value, passwordInput.value)
+                .then(success => {
+                    firebase.auth().currentUser.getIdToken(true)
+                        .then(idToken => {
+                            post(window.location.href, {idToken: idToken});
+                        });
+                })
                 .catch(error => {
                     alert("E-mail en/of wachtwoord is incorrect!")
                 });
@@ -20,20 +32,7 @@ document.getElementById("login-button").onclick = ev => {
     }
 }
 
-firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-        firebase.auth().currentUser.getIdToken(true)
-            .then(idToken => {
-                post(window.location.href, {idToken: idToken});
-            });
-    } else {
-        window.location.href = "/cms";
-    }
-});
-
 function post(path, params, method = 'post') {
-    // The rest of this code assumes you are not using a library.
-    // It can be made less wordy if you use one.
     const form = document.createElement('form');
     form.method = method;
     form.action = path;
