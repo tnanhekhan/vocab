@@ -15,6 +15,14 @@ router.post("/", (req, res, next) => {
 
 router.get("/dashboard", (req, res) => {
     res.render("dashboard/dashboard", {title: "CMS", dest: "dashboard"});
-})
+});
+
+router.get("/register", (req, res) => {
+    loginController.getRegister(req, res);
+});
+
+router.post("/register", (req, res) => {
+    loginController.validateLogin(req, res);
+});
 
 module.exports = router;

@@ -1,6 +1,16 @@
-<%- include ("./partials/head.ejs") %>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="../../public/css/cms.css"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/normalize.css"/>
+    <link rel="stylesheet" href="/css/cms.css"/>
+    <title><%= title %></title>
+</head>
+<body>
 <main>
+    <a id="error-back" href="/cms/dashboard">Terug naar dashboard</a>
     <h1><%= message %></h1>
     <h2><%= error.status %></h2>
     <pre><%= error.stack %></pre>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/normalize.css"/>
+    <link rel="stylesheet" href="/css/cms.css"/>
+    <title><%= title %></title>
+</head>
+<body>
+
+<div id="auth-container">
+    <div id="register-form" class="auth-form">
+        <h1><span>v</span><span class="red-letter">o</span><span>c</span><span class="red-letter">a</span><span>b</span>
+        </h1>
+        <input id="username-input" class="form-input" type="email" placeholder="vul e-mail in" name="user" required>
+        <input id="password-input" class="form-input" type="password" placeholder="vul wachtwoord in" name="pass"
+               autocomplete="on"
+               required>
+        <input id="password-repeat-input" class="form-input" type="password" placeholder="herhaal wachtwoord" name="pass-repeat"
+               autocomplete="on"
+               required>
+        <button id="register-send-button" class="form-button success-button">registeren</button>
+    </div>
+</div>
+
+
+<%- include ("../partials/footer.ejs") %>

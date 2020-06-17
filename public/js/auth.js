@@ -1,35 +1,97 @@
+const loginButton = document.getElementById("login-button");
+const logoutButton = document.getElementById("logout-button");
+const registerButton = document.getElementById("register-send-button");
+
 firebase.auth().onAuthStateChanged(user => {
-    if (!user) {
-        if (window.location.pathname !== "/cms") {
+    const path = window.location.pathname
+    if (user) {
+        if (path === "/cms" || path === "/cms/register") {
+            window.location.href = "/cms/dashboard";
+        }
+    } else {
+        if (path === "/cms" || path === "/cms/register") {
+        } else {
             window.location.href = "/cms";
+            alert("Niet ingelogd!");
         }
     }
 });
 
-document.getElementById("login-button").onclick = ev => {
-    const usernameInput = document.getElementById("username-input");
-    const passwordInput = document.getElementById("password-input");
+if (loginButton) {
+    loginButton.onclick = () => {
+        const usernameInput = document.getElementById("username-input");
+        const passwordInput = document.getElementById("password-input");
 
-    if (usernameInput.value.length !== 0 && passwordInput.value.length !== 0) {
-        if (!usernameInput.checkValidity()) {
-            usernameInput.reportValidity();
+        if (usernameInput.value.length !== 0 && passwordInput.value.length !== 0) {
+            if (!usernameInput.checkValidity()) {
+                usernameInput.reportValidity();
+            } else {
+                firebase.auth()
+                    .signInWithEmailAndPassword(usernameInput.value, passwordInput.value)
+                    .then(success => {
+                        firebase.auth().currentUser.getIdToken(true)
+                            .then(idToken => {
+                                post(window.location.href, {idToken: idToken});
+                            });
+                    })
+                    .catch(error => {
+                        alert("E-mail en/of wachtwoord is incorrect!")
+                    });
+            }
         } else {
-            firebase.auth()
-                .signInWithEmailAndPassword(usernameInput.value, passwordInput.value)
-                .then(success => {
-                    firebase.auth().currentUser.getIdToken(true)
-                        .then(idToken => {
-                            post(window.location.href, {idToken: idToken});
+            passwordInput.reportValidity();
+            usernameInput.reportValidity();
+        }
+    }
+}
+
+if (registerButton) {
+    registerButton.onclick = ev => {
+        const usernameInput = document.getElementById("username-input");
+        const passwordInput = document.getElementById("password-input");
+        const passwordRepeatInput = document.getElementById("password-repeat-input");
+
+        const isInputNotEmpty = (usernameInput.value.length !== 0 && passwordInput.value.length !== 0 && passwordRepeatInput.value.length !== 0)
+        const isInputValid = (usernameInput.checkValidity() && passwordInput.checkValidity() && passwordRepeatInput.checkValidity());
+
+        if (isInputNotEmpty) {
+            if (!isInputValid) {
+                usernameInput.reportValidity();
+            } else {
+                if (passwordInput.value !== passwordRepeatInput.value) {
+                    alert("Wachtwoorden zijn niet gelijk!")
+                } else {
+                    firebase.auth().createUserWithEmailAndPassword(usernameInput.value, passwordRepeatInput.value)
+                        .then(success => {
+                            firebase.auth().currentUser.getIdToken(true)
+                                .then(idToken => {
+                                    post(window.location.href, {idToken: idToken});
+                                });
+                        })
+                        .catch(() => {
+                            alert("E-mail is al gebruikt!");
                         });
-                })
-                .catch(error => {
-                    alert("E-mail en/of wachtwoord is incorrect!")
+                }
+            }
+        } else {
+            passwordRepeatInput.reportValidity();
+            passwordInput.reportValidity();
+            usernameInput.reportValidity();
+        }
+    }
+}
+
+if (logoutButton) {
+    logoutButton.onclick = ev => {
+        let logoutConfirm = confirm("Wil je uitloggen?");
+        if (logoutConfirm === true) {
+            firebase.auth().signOut()
+                .then(() => {
+                    window.location.href = "/cms";
                 });
         }
-    } else {
-        passwordInput.reportValidity();
-        usernameInput.reportValidity();
     }
+
 }
 
 function post(path, params, method = 'post') {
