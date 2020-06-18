@@ -10,12 +10,12 @@ exports.getWordLists = (req, res) => {
         .catch(() => {
             res.render("wordlists/wordlists", {title: "CMS", dest: "wordlists"});
         });
-}
+};
 
 // Routes to the the word list choice screen between manual or load a file
 exports.getAddWordListModal = (req, res) => {
     res.render("wordlists/wordlist-add-choice", {title: "CMS", dest: "wordlists"});
-}
+};
 
 // Routes to the the manual word list screen
 exports.getManualAddWordList = (req, res) => {
@@ -46,7 +46,7 @@ exports.insertUploadedWordList = (req, res) => {
         .then(id => {
             res.redirect(`/cms/word-lists/${id}`);
         });
-}
+};
 
 // Redirect logic when creating a word list manually
 exports.updateManualAddWordList = (req, res) => {
@@ -71,4 +71,4 @@ exports.updateManualAddWordList = (req, res) => {
     } else {
         res.redirect("/cms/word-lists");
     }
-}
+};

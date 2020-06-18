@@ -1,0 +1,22 @@
+<%- include ("../partials/head.ejs") %>
+
+<main>
+    <h1 class="header">Klas toevoegen</h1>
+    <div class="content">
+        <div class="wordlist-add-container">
+            <form id="class-list-form" method="post">
+                <div>
+                    <label for="className"><h2>Naam klas</h2></label>
+                    <input class="form-input" type="text" name="className" required>
+                </div>
+                <div>
+                    <label for="classGroup"><h2>Groep</h2></label>
+                    <input class="form-input" type="number" name="classGroup" required>
+                </div>
+                <input class="form-button success-button" name="save-image" type="submit" value="klas Uploaden">
+            </form>
+        </div>
+    </div>
+</main>
+
+<%- include ("../partials/footer.ejs") %>

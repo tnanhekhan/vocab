@@ -65,17 +65,28 @@ main {
     border-radius: 16px;
 }
 
-.content, .content-detail-student {
+.content, .content-detail-student, .content-detail-student-manual {
     background-color: white;
     padding: 8px 32px 32px;
     border-radius: 16px;
 }
 
+.content > #lijst-toewijzen > button{
+    width: fit-content;
+}
+
+/*student progress page*/
 .content-detail-student {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3,1fr);
+
+    height: 42vh;
+    width: 78vw;
+    top: 45vh;
+    position: absolute;
 }
+
 
 .content-detail-student > h1 {
     grid-row: 1 / 2;
@@ -84,11 +95,14 @@ main {
 }
 
 .student-image {
-    width: 400px;
-    height: 350px;
+    width: 800px;
+    height: 500px;
     background: white;
     border-radius: 50%;
     margin: auto;
+    position: absolute;
+    left: 40vw;
+    top: 13vh;
 }
 
 .voortgang {
@@ -111,10 +125,35 @@ main {
 }
 
 #progress-bar > div {
-    width: 1%;
+    width: 0%;
     height: 15px;
     background-color: #fe3c2f;
     border-radius: 50px;
+}
+
+#progress-bar > #total-percentage {
+    width: 0%;
+    height: 15px;
+    background-color: #fe3c2f;
+    border-radius: 50px;
+}
+
+/*add student manually*/
+#word-list-name-form-manual > *{
+    margin : 0;
+}
+
+.content-detail-student-manual {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4,1fr);
+
+    height: 45vh;
+}
+
+.content-detail-student-manual > #word-list-name-form-manual {
+    grid-column: 1 / 2;
+    grid-row: 1 / -1;
 }
 
 .wordlist-item, .student-item {
@@ -181,10 +220,14 @@ main {
     margin: 16px -10% 16px 16px;
 }
 
-#word-list-name-form{
+#word-list-name-form, #class-list-form{
     display: flex;
     justify-content: space-between;
     width: 100%;
+}
+
+#class-list-form > div > input{
+    margin:0;
 }
 
 #word-form{

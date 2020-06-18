@@ -1,0 +1,21 @@
+<%- include ("../partials/head.ejs") %>
+
+<main>
+    <h1 class="header">Klassenlijsten</h1>
+    <div class="content">
+        <h2>Student toevoegen</h2>
+        <div class="wordlist-add-container">
+            <a class="square-link" href="add-student/manual">
+                <button class="wordlist-item wordlist-add-select">Handmatig invullen</button>
+            </a>
+            <form method="post" enctype="multipart/form-data">
+                <label for="file" class="file-input-label">gegevens uploaden</label>
+                <input type="file" accept=".xlsx, .xls, .csv" name="file" id="file" class="hidden-file-input"
+                       title="Selecteer een lijst" required>
+                <input class="form-button success-button" name="save-image" type="submit" value="Student Uploaden">
+            </form>
+        </div>
+    </div>
+</main>
+
+<%- include ("../partials/footer.ejs") %>
