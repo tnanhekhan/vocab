@@ -64,8 +64,8 @@ main {
     border-radius: 16px;
 }
 
-.content > #lijst-toewijzen {
-    
+.content > #lijst-toewijzen > button{
+    width: fit-content;
 }
 
 /*student progress page*/
