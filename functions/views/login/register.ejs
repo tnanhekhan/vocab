@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="Description" content="Login page for cms of vocab">
+    <meta name="Description" content="Register page for cms of vocab">
     <link rel="stylesheet" href="/css/normalize.css"/>
     <link rel="stylesheet" href="/css/cms.css"/>
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -15,19 +15,17 @@
 <body>
 
 <div id="auth-container">
-    <div id="login-form" class="auth-form">
+    <div id="register-form" class="auth-form">
         <h1><span>v</span><span class="red-letter">o</span><span>c</span><span class="red-letter">a</span><span>b</span>
         </h1>
-        <input id="username-input" class="form-input" type="email" placeholder="e-mail" name="user" required>
-        <input id="password-input" class="form-input" type="password" placeholder="wachtwoord" name="pass" autocomplete="on"
+        <input id="username-input" class="form-input" type="email" placeholder="vul e-mail in" name="user" required>
+        <input id="password-input" class="form-input" type="password" placeholder="vul wachtwoord in" name="pass"
+               autocomplete="on"
                required>
-        <button id="login-button" class="form-button success-button">inloggen</button>
-    </div>
-    <div class="divider"></div>
-    <div id="register-container">
-        <h2>Registreren</h2>
-        <h3>Maak hier een account aan!</h3>
-        <a href="/cms/register" id="register-button" class="form-button success-button">registreren</a>
+        <input id="password-repeat-input" class="form-input" type="password" placeholder="herhaal wachtwoord" name="pass-repeat"
+               autocomplete="on"
+               required>
+        <button id="register-send-button" class="form-button success-button">registeren</button>
     </div>
 </div>
 

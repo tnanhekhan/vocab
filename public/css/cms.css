@@ -14,6 +14,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
     height: 100%;
     width: 15%;
     position: fixed;
@@ -21,12 +22,17 @@ body {
     top: 0;
     left: 0;
     background-color: white;
-    padding-top: 32px;
 }
 
 .sidenav h1{
     font-family: Verdana, sans-serif;
+    justify-self: flex-start;
 }
+
+.sidenav button{
+    width: 12vw;
+}
+
 
 #selected-nav {
     color: #fe3c2f;
@@ -47,6 +53,7 @@ body {
 }
 
 main {
+    padding: 8px;
     margin-left: calc(15% + 2%);
     margin-right: 2%;
 }
@@ -275,11 +282,58 @@ main {
     color: #fe3c2f;
 }
 
-.login-form{
+.auth-form {
     background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+#auth-container {
+    display: flex;
+    background-color: white;
     margin: 64px;
     padding: 16px;
+    justify-content: space-evenly;
+    flex-direction: row;
+    flex: 1;
+    border-radius: 16px;
+}
+
+#register-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#register-button {
+    text-align: center;
+    height: auto;
+    text-decoration: none;
+}
+
+#dashboard-content{
+    display: flex;
+    flex-direction: column;
+}
+
+#dashboard-content > a {
+    padding: 16px;
+}
+
+#error-back {
+    font-size: large;
+    font-weight: bold;
+}
+
+#image-upload-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.divider{
+    width: 2px;
+    margin: 8px 0;
+    background: #fff1ef;
 }
