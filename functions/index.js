@@ -8,6 +8,7 @@ const express = require('express');
 const cmsRouter = require('./routes/cms');
 const wordListsRouter = require('./routes/word-lists');
 const classListsRouter = require('./routes/class-lists');
+const usersRouter = require('./routes/users')
 const expressApp = express();
 
 //import dialogflow app
@@ -21,7 +22,8 @@ expressApp.set('views', path.join(__dirname, 'views'))
     .use(express.urlencoded({extended: true}))
     .use('/cms', cmsRouter)
     .use('/cms/word-lists', wordListsRouter)
-    .use('/cms/class-lists', classListsRouter);
+    .use('/cms/class-lists', classListsRouter)
+    .use('/cms/users', usersRouter);
 
 // catch 404 and forward to error handler
 expressApp.use(function (req, res, next) {

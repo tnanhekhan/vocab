@@ -337,3 +337,26 @@ main {
     margin: 8px 0;
     background: #fff1ef;
 }
+
+#users-content-header{
+    display: flex;
+    flex-direction: row;
+}
+
+#users-content-header > a {
+    margin-left: auto;
+}
+
+.user-item{
+    display: flex;
+    flex-direction: row;
+}
+
+.user-item > input[type=submit]{
+    margin-left: auto;
+}
+
+.user-item > input[type=submit]:focus{
+    outline: none;
+}
+

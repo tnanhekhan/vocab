@@ -1,0 +1,23 @@
+<%- include ("../partials/head.ejs") %>
+
+<main>
+    <h1 class="header">Gebruikers</h1>
+    <div class="content">
+        <div id="users-content-header">
+            <h2>Beheer gebruikers</h2>
+            <a href="/cms/users/add">
+                <button class="form-button success-button">gebruiker toevoegen</button>
+            </a>
+        </div>
+        <% users.forEach(user => { %>
+            <form class="user-item" method="post" onsubmit="return confirm('Wil je <%= user.email%> verwijderen?')">
+                <input class="form-input" type="text" value="<%= user.email %>">
+                <input type="hidden" name="uid" value="<%= user.uid %>">
+                <input class="form-button cancel-button" type="submit" value="verwijderen">
+            </form>
+            <hr>
+        <% }); %>
+    </div>
+</main>
+
+<%- include ("../partials/footer.ejs") %>
