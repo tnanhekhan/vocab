@@ -254,6 +254,7 @@ main {
     justify-content: space-evenly;
     flex-direction: row;
     flex: 1;
+    border-radius: 16px;
 }
 
 #register-container {
