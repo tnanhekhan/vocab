@@ -4,7 +4,7 @@
     <h1 class="header">Dashboard</h1>
     <div class="content">
         <h2>Woord toevoegen</h2>
-        <form id="word-form" method="post">
+        <form id="word-form" method="post" onsubmit="return confirm('Wil je de wijzigingen opslaan?')">
             <input type="text" class="form-input" name="word" value="<%= word %>"><br>
             <input class="form-button success-button" name="save-word" type="submit" value="Opslaan">
             <input class="form-button cancel-button" name="cancel-word" type="submit" value="Annuleren">
@@ -12,17 +12,21 @@
                 <input class="form-button delete-button" name="delete-word" type="submit" value="Verwijderen">
             <% } %>
         </form>
+        <% if (word.length != 0) { %>
         <form id="image-form" method="post" enctype="multipart/form-data">
             <% if(hasImage){ %>
                 <img src="<%= image %>" id="image-preview" width="25%">
             <% }else{ %>
                 <img id="image-preview" width="25%">
             <% } %>
-            <label for="word-image" class="file-input-label">Afbeelding Toevoegen</label>
-            <input type="file" accept=".png, .jpeg, .jpg" name="word-image" id="word-image"
-                   class="hidden-file-input" title="Afbeelding Toevoegen" required>
-            <input class="form-button success-button" name="save-image" type="submit" value="Afbeelding Uploaden">
+                <div id="image-upload-container">
+                    <label for="word-image" class="file-input-label">Afbeelding Toevoegen</label>
+                    <input type="file" accept=".png, .jpeg, .jpg" name="word-image" id="word-image"
+                           class="hidden-file-input" title="Afbeelding Toevoegen" required>
+                    <input class="form-button success-button" name="save-image" type="submit" value="Afbeelding Uploaden">
+                </div>
         </form>
+        <% } %>
     </div>
 </main>
 <script>
