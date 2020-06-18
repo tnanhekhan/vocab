@@ -21,7 +21,7 @@ exports.insertNewWord = (req, res) => {
     } else {
         res.redirect(`/cms/word-lists/${req.params.listId}`);
     }
-}
+};
 
 exports.getWord = (req, res) => {
     repo.getWord(req.params.listId, req.params.wordId)

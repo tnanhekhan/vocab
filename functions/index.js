@@ -11,7 +11,7 @@ const classListsRouter = require('./routes/class-lists');
 const expressApp = express();
 
 //import dialogflow app
-const app = require('./dialogflowApp');
+const app = require('./dialogflow/dialogflow-app');
 
 expressApp.set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
