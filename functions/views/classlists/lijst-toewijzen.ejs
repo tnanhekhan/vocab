@@ -1,0 +1,22 @@
+<%- include ("../partials/head.ejs") %>
+
+<main>
+    <h1 class="header"><%= klas %></h1>
+    <div class="content">
+        <div class="wordlists-container">
+            <% studenten.forEach(student => { %>
+                <form class="square-link" method="post">
+                    <button type=submit class="student-item" name=student value="<%= student.id %>">
+                        <%= student.voornaam + ' ' + student.achternaam %></button>
+                </form>
+            <% }); %>
+            <% for (var i = 0; i < (15 - studenten.length); i++) { %>
+                <a class="square-link" href="class-lists/add-class">
+                    <button class="wordlist-item add">+</button>
+                </a>
+            <% } %>
+        </div>
+    </div>
+</main>
+
+<%- include ("../partials/footer.ejs") %>

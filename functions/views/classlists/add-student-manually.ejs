@@ -1,0 +1,18 @@
+<%- include ("../partials/head.ejs") %>
+
+<main>
+    <h1 class="header">Student toevoegen</h1>
+    <div class="content-detail-student-manual">
+        <form id="word-list-name-form-manual" method="post">
+            <label for="firstname"><h2>Voornaam</h2></label>
+            <input class="form-input" type="text" name="firstname" required>
+            <label for="lastname"><h2>Achternaam</h2></label>
+            <input class="form-input" type="text" name="lastname" required>
+            <label for="age"><h2>Leeftijd</h2></label>
+            <input class="form-input" type="number" name="age" required>
+            <input class="form-button success-button" name="save-image" type="submit" value="Student toevoegen" style="margin-top: 0.5cm">
+        </form>
+    </div>
+</main>
+
+<%- include ("../partials/footer.ejs") %>

@@ -14,19 +14,36 @@
             <% }); %>
         </div>
         <div><h3>Toegewezen lijst</h3>
-            <li><%= lijst %></li>
+            <% if(!lijst) { %>
+                <p>geen lijst toegewezen</p>
+            <% } else { %>
+                <li><%= lijst %></li>
+            <% } %>
         </div>
         <div class="voortgang">
             <h3>voortgang - week</h3>
             <div id="progress-bar">
-                <div></div>
-                <p>20/100 woorden</p>
+                <div id="progress-percentage"></div>
+                <% if(aantalGeoefend > 0) { %>
+                    <p><%= aantalGeoefend %>/100 woorden</p>
+                <% } else { %>
+                    <p>0/100 woorden</p>
+                <% } %>
             </div>
         </div>
         <div class="totaal">
             <h3>totaal</h3>
+            <div id="progress-bar">
+                <div id="total-percentage"></div>
+                <p>0/3000</p>
+            </div>
         </div>
     </div>
 </main>
+<script>
+    const progressPercentage = document.getElementById('progress-percentage');
+    progressPercentage.style.width = <%= aantalGeoefend %> *
+    0.9 + '%';
+</script>
 
 <%- include ("../partials/footer.ejs") %>

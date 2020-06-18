@@ -20,5 +20,16 @@ exports.getClassLists = (req, res) => {
 };
 
 exports.getAddStudentListModal = (req, res) => {
-    res.render("wordlists/wordlist-add-choice", {title: "CMS", dest: "classlists"});
+    res.render("classlists/add-class", {title: "CMS", dest: "classlists"});
+};
+
+exports.insertUploadedClasslist = (req, res) => {
+    let data = {
+        groep: req.body.classGroup,
+        naam: req.body.className
+    };
+    db.collection('classes').add(data)
+        .then(result => {
+            res.redirect(`/cms/class-lists/${result.id}`)
+        });
 };
