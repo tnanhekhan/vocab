@@ -14,14 +14,14 @@
     <nav>
         <% switch(dest) {
         case "dashboard": %>
-        <a id=selected-nav href="/cms">Dashboard</a>
+        <a id=selected-nav href="/cms/dashboard">Dashboard</a>
         <a href="/cms/word-lists">Woordenlijsten</a>
-        <a href="/cms/class-lists">Klassenlijsten</a>z
+        <a href="/cms/class-lists">Klassenlijsten</a>
         <a href="/cms/teacher-chat">Docenten chat</a>
         <% break;
 
         case "wordlists": %>
-        <a href="/cms">Dashboard</a>
+        <a href="/cms/dashboard">Dashboard</a>
         <a id=selected-nav href="/cms/word-lists">Woordenlijsten</a>
         <a href="/cms/class-lists">Klassenlijsten</a>
         <a href="/cms/teacher-chat">Docenten chat</a>
@@ -35,7 +35,7 @@
         <% break;
 
         default: %>
-        <a href="/cms">Dashboard</a>
+        <a href="/cms/dashboard">Dashboard</a>
         <a href="/cms/word-lists">Woordenlijsten</a>
         <a href="/cms/class-lists">Klassenlijsten</a>
         <a href="/cms/teacher-chat">Docenten chat</a>
