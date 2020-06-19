@@ -82,7 +82,7 @@ main {
     grid-template-rows: repeat(3,1fr);
 
     height: 42vh;
-    width: 78vw;
+    width: 76vw;
     top: 45vh;
     position: absolute;
 }
@@ -95,14 +95,14 @@ main {
 }
 
 .student-image {
-    width: 800px;
-    height: 500px;
+    width: 650px;
+    height: 450px;
     background: white;
     border-radius: 50%;
     margin: auto;
     position: absolute;
-    left: 40vw;
-    top: 13vh;
+    left: 35vw;
+    top: 18vh;
 }
 
 .voortgang {

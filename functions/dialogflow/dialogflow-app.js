@@ -11,6 +11,7 @@ app.intent('Welcome', conv => {
 });
 
 app.intent('Begin', conv => {
+    console.log('triggered');
     return intent.begin(conv)
         .then(result => {
             conv.ask(result.woord);
@@ -38,7 +39,7 @@ app.intent('Woordjes', (conv, {gesprokenWoord}) => {
 });
 
 app.intent('Fallback', conv => {
-    conv.close('Er gaat wat mis');
+    conv.ask('Zeg, "ja", als je wilt beginnen!');
 });
 
 module.exports = app;
