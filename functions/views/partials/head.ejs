@@ -22,31 +22,35 @@
         <a id=selected-nav href="/cms/dashboard">Dashboard</a>
         <a href="/cms/word-lists">Woordenlijsten</a>
         <a href="/cms/class-lists">Klassenlijsten</a>
+        <a href="/cms/users">Gebruikers</a>
         <% break;
 
         case "wordlists": %>
         <a href="/cms/dashboard">Dashboard</a>
         <a id=selected-nav href="/cms/word-lists">Woordenlijsten</a>
         <a href="/cms/class-lists">Klassenlijsten</a>
+        <a href="/cms/users">Gebruikers</a>
         <% break;
 
         case "classlists": %>
         <a href="/cms/dashboard">Dashboard</a>
         <a href="/cms/word-lists">Woordenlijsten</a>
         <a id=selected-nav href="/cms/class-lists">Klassenlijsten</a>
+        <a href="/cms/users">Gebruikers</a>
         <% break;
 
-        case "classlists": %>
-        <a href="/cms">Dashboard</a>
+        case "users": %>
+        <a href="/cms/dashboard">Dashboard</a>
         <a href="/cms/word-lists">Woordenlijsten</a>
-        <a id=selected-nav href="/cms/class-lists">Klassenlijsten</a>
-        <a href="/cms/teacher-chat">Docenten chat</a>
+        <a href="/cms/class-lists">Klassenlijsten</a>
+        <a id=selected-nav href="/cms/users">Gebruikers</a>
         <% break;
 
         default: %>
         <a href="/cms/dashboard">Dashboard</a>
         <a href="/cms/word-lists">Woordenlijsten</a>
         <a href="/cms/class-lists">Klassenlijsten</a>
+        <a href="/cms/users">Gebruikers</a>
         <% break;
         } %>
     </nav>

@@ -6,13 +6,13 @@ firebase.auth().onAuthStateChanged(user => {
     const path = window.location.pathname
     if (user) {
         if (path === "/cms" || path === "/cms/register") {
-            window.location.href = "/cms/dashboard";
+            window.location.replace("/cms/dashboard");
         }
     } else {
         if (path === "/cms" || path === "/cms/register") {
         } else {
-            window.location.href = "/cms";
             alert("Niet ingelogd!");
+            window.location.replace("/cms");
         }
     }
 });
@@ -61,16 +61,7 @@ if (registerButton) {
                 if (passwordInput.value !== passwordRepeatInput.value) {
                     alert("Wachtwoorden zijn niet gelijk!")
                 } else {
-                    firebase.auth().createUserWithEmailAndPassword(usernameInput.value, passwordRepeatInput.value)
-                        .then(success => {
-                            firebase.auth().currentUser.getIdToken(true)
-                                .then(idToken => {
-                                    post(window.location.href, {idToken: idToken});
-                                });
-                        })
-                        .catch(() => {
-                            alert("E-mail is al gebruikt!");
-                        });
+                    post(window.location.href, {user: usernameInput.value, pass: passwordInput.value});
                 }
             }
         } else {
@@ -85,10 +76,7 @@ if (logoutButton) {
     logoutButton.onclick = ev => {
         let logoutConfirm = confirm("Wil je uitloggen?");
         if (logoutConfirm === true) {
-            firebase.auth().signOut()
-                .then(() => {
-                    window.location.href = "/cms";
-                });
+            firebase.auth().signOut();
         }
     }
 
