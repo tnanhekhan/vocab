@@ -31,11 +31,23 @@ Hosting: `https://vocab-project.web.app/` or `https://vocab-project.firebaseapp.
 Navigate to `https://vocab-project.web.app/cms` or `https://vocab-project.firebaseapp.com/cms` for the CMS.
 
 ## Design Rationale
-Vocab is a concept for a voice user interface which helps students learn Dutch with the help of visual and auditory feedback. This concept has been designed by HvA students from CMD.
+Vocab is a concept for a voice user interface which helps students learn Dutch with the help of visual and auditory feedback. This concept has been designed by HvA students from CMD and is backed by a design rationale and research that is also done by the CMD students.
 
-Originally Vocab was designed for NT2 education. NT2 education is special education for children between the ages of 6 years and 11 years which have dutch as a second language. The amount of NT2 children in the Netherlands has increased the last few years. Because School attendance for all children between the ages of 5 and 16 is compulsory, these NT2 children are placed in a newcomer class due to their lack of skill in the Dutch language. The amount of these newcomer classes however are scarce and not every NT2 child can get the sufficient amount of education they need. So Vocab is created to help children increase the grasp with the Dutch language. Due to the Covid-19 pandemic the scope of Vocab has been expanded to all children which are learning at home instead of only NT2 children.
+Originally Vocab was designed for NT2 education. NT2 education is special education for children between the ages of 6 years and 11 years which have dutch as a second language. The amount of NT2 children in the Netherlands has increased the last few years. Because School attendance for all children between the ages of 5 and 16 is compulsory, these NT2 children are placed in a newcomer class due to their lack of skill in the Dutch language. The amount of these newcomer classes however are scarce and not every NT2 child can get the sufficient amount of education they need. So Vocab was created to help children increase the grasp with the Dutch language. Due to the Covid-19 pandemic however, the scope of Vocab has been expanded to all children which are learning at home instead of only NT2 children.
 
 To be able to test the concept of Vocab, a working prototype needs to be delivered. With the help of a Design Rationale from the CMD students, this prototype can be built.
+
+### Development Process
+<details>
+This project has a scrum-like approach. There are five sprints that each last a week. Every monday of the week at 9:30 there is a meeting with out coach (Vasilis van Gemert). At the end of the week we have a kind of sprint review and sprint planning with out product owner (Yuri Westplat). During these end of the week meetings, a demo is shown of the progress that has been made so far.   
+
+These are all participants of this tech side of this project:
+- Yuri Westplat (Product Owner)
+- Vasilis van Gemert (Coach)
+- Students HvA CMD (Design Team)
+- Heralt Levant (Developer)
+- Tabish Nanhekhan (Developer)
+</details>
 
 ### Product
 <details>
@@ -44,13 +56,11 @@ Vocab consists of multiple components. These components are:
 - Voice Interface
 - Content Management System (CMS)
 
-The Voice interface is made with google conversational actions and shows the 
-
-De voorwaarde van success voor deze opdracht is dat er tenminste een gebruiksvriendelijke CMS geleverd wordt.
-
 #### Voice Interface
 <details>
 De Voice Interface is het gedeelte dat gebruikt wordt door de leerlingen. Hier krijgen de leerlingen een woord te zien met een gerelateerde afbeelding. De leerlingen moeten dan het woord uitspreken. De Voice Interface geeft dan aan of het woord correct of incorrect is.
+
+The Voice Interface is made with google conversational actions and this is the part of Vocab that is going to be used by the students. 
 </details>
 
 #### Content Management System (CMS)
@@ -62,16 +72,9 @@ Naast beheren heeft de CMS ook een rapportage functionaliteit waarbij de vooruit
 
 </details>
 
-### Development Process
+### Architecture 
 <details>
-Dit project heeft een scrum-achtige opzet. Er zijn vijf sprints die ieder een week duren. Elke maandag is er een soort sprint planning en elke vrijdag is er een soort sprint review waarbij de vooruitgang van de week wordt gepresenteerd. Aan het eind van elke week wordt er dus een Minimum Viable Product (MVP) verwacht. Yuri Westplat is hier de product owner van dit project, Heralt Levant en Tabish Nanhekhan zijn de developers van dit project en Vasilis van Gemert is de coach. Er is zijn ook studenten van HvA CMD die als Design Team fungeren.
-
-Hier zijn alle deelnemers van dit project:
-- Yuri Westplat (Product Owner)
-- Vasilis van Gemert (Coach)
-- Students HvA CMD (Design Team)
-- Heralt Levant (Developer)
-- Tabish Nanhekhan (Developer)
+MVC-like architecture
 </details>
 
 <!---
