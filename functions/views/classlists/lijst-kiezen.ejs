@@ -1,8 +1,9 @@
 <%- include ("../partials/head.ejs") %>
 
 <main>
-    <h1 class="header"><%= klas %></h1>
+    <h1 class="header">Klas: <%= klas %></h1>
     <div class="content">
+        <h2>Kies een lijst om toe te wijzen</h2>
         <div class="wordlists-container">
             <% lijsten.forEach(lijst => { %>
                 <a class="square-link" href="lijst-toewijzen/<%= lijst.id %>">

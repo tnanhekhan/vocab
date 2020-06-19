@@ -57,18 +57,14 @@ Vocab consists of multiple components. These components are:
 - Content Management System (CMS)
 
 #### Voice Interface
-<details>
 De Voice Interface is het gedeelte dat gebruikt wordt door de leerlingen. Hier krijgen de leerlingen een woord te zien met een gerelateerde afbeelding. De leerlingen moeten dan het woord uitspreken. De Voice Interface geeft dan aan of het woord correct of incorrect is.
 
 The Voice Interface is made with google conversational actions and this is the part of Vocab that is going to be used by the students. 
-</details>
 
 #### Content Management System (CMS)
-<details>
 VOCAB gebruikt lijsten van woorden die door docenten aangepast kunnen worden. Deze woorden moeten worden beheerd door middel van een CMS. Naast het beheren van de woordenlijsten kunnen ook lijsten van klassen en lijst van leerlingen beheerd worden. 
 
 Naast beheren heeft de CMS ook een rapportage functionaliteit waarbij de vooruitgang per leerling gezien kan worden. Ook is er sprake van een chat functionaliteit tussen Docenten.
-</details>
 
 </details>
 
