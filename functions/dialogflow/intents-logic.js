@@ -78,7 +78,7 @@ exports.woorden = (conv, {gesprokenWoord}) => {
     if (gesprokenWoord === laatsteWoord) {
         sendProgress(aantalWoorden, moeilijkeWoorden, 'list two');
         return value = new Promise((resolve, reject) => {
-            resolve({woord: 'goed gedaan!', event: 'KLAAR', plaatje: null});
+            resolve({woord: 'goed gedaan! tot de volgende keer!', event: 'KLAAR', plaatje: null});
         });
     } else {
         if ((gesprokenWoord.toLowerCase() !== woordenlijst[index].woord.toLowerCase()) && (incorrect_guesses < 3)) {
