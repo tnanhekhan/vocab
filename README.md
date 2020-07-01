@@ -190,6 +190,7 @@ The logic for the catching the spoken words of the user when using the app and d
 - [Node.js](https://nodejs.org/en/): A JavaScript runtime built on Chrome's V8 JavaScript engine.
 - [Express.js](https://expressjs.com/): A minimal and flexible Node.js web application framework.
 - [EJS](https://ejs.co/): Embedded JavaScript templating.
+- [Ngrok](https://ngrok.com/): ngrok tunnels websocket connections over HTTP tunnels.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
