@@ -24,14 +24,11 @@ function generateSecretSpell() {
 exports.generateMultipleSecretSpells = () => {
     let secretSpellArray = [];
     // Hard limit is 1296 combinations with the current secret spell word parts! Takes long time with random implementation however.
-    let amountOfEntries = 600;
+    let amountOfEntries = 100;
 
     while (secretSpellArray.length !== amountOfEntries) {
         const secretSpell = generateSecretSpell();
-
-        if (secretSpellArray.includes(secretSpell)) {
-            secretSpellArray.pop();
-        } else {
+        if (!secretSpellArray.includes(secretSpell)) {
             secretSpellArray.push(secretSpell);
         }
     }
