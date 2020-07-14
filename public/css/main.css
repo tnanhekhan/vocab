@@ -14,18 +14,30 @@ html, body, h1, h2 {
 
 /*Hallo scherm*/
 #greeting {
-    grid-row: 4 / 6;
-    grid-column: 3 / 7;
     size: 50px;
     text-align: center;
+    width: fit-content;
+    height: fit-content;
+    position:absolute;
+    top: 7.5cm;
+    left: 4.5cm;
 }
 
 /*Groet scherm*/
 #goodbye {
-    grid-row: 4 / 6;
-    grid-column: 3 / 7;
     size: 50px;
     text-align: center;
+    width: fit-content;
+    height: fit-content;
+    position:absolute;
+    top: 7.5cm;
+    left: 4.5cm;
+}
+
+#didi-goodbye {
+    width: 5.5cm;
+    grid-row: 4 / 6;
+    grid-column: 1 / 2;
 }
 
 #word-container {
@@ -67,5 +79,11 @@ html, body, h1, h2 {
     left: 50%;
 
     transform: translate(-50%, -50%);
+}
+
+#didi-welcome {
+    width: 5.5cm;
+    grid-row: 4 / 6;
+    grid-column: 1 / 2;
 }
 

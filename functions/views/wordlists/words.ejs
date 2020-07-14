@@ -4,7 +4,7 @@
     <h1 class="header">Woordenlijsten</h1>
     <div class="content">
         <h2>Woordenlijst naam</h2>
-        <form id="word-list-name-form" method="post">
+        <form id="word-list-name-form" method="post" onsubmit="return confirm('Wil je de wijzigingen opslaan?')">
             <% if(listName.length != 0) { %>
                 <input type="text" class="form-input" name="listName" value="<%= listName %>" required><br>
                 <input type="hidden" name="listId" value="<%= listId %>">

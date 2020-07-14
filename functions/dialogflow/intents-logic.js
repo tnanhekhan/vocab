@@ -38,7 +38,7 @@ async function sendProgress(completedWords, difficultWords, woordenlijst) {
     const studentProgressie = db.collection('progression').doc('J0Ijqla8aZG6HC9CRIYp');
     let geoefend = await studentProgressie.get();
     geoefend = geoefend.data().woordenGeoefend + completedWords;
-
+    console.log('aantalwoorden ',geoefend);
         studentProgressie.get().update({
             woordenGeoefend: geoefend,
             student: '8Bnz4LbO0ywimt0oGjY5',
@@ -78,7 +78,7 @@ exports.woorden = (conv, {gesprokenWoord}) => {
     if (gesprokenWoord === laatsteWoord) {
         sendProgress(aantalWoorden, moeilijkeWoorden, 'list two');
         return value = new Promise((resolve, reject) => {
-            resolve({woord: 'goed gedaan!', event: 'KLAAR', plaatje: null});
+            resolve({woord: 'goed gedaan! tot de volgende keer!', event: 'KLAAR', plaatje: null});
         });
     } else {
         if ((gesprokenWoord.toLowerCase() !== woordenlijst[index].woord.toLowerCase()) && (incorrect_guesses < 3)) {

@@ -1,35 +1,85 @@
+const loginButton = document.getElementById("login-button");
+const logoutButton = document.getElementById("logout-button");
+const registerButton = document.getElementById("register-send-button");
+
 firebase.auth().onAuthStateChanged(user => {
-    if (!user) {
-        if (window.location.pathname !== "/cms") {
-            window.location.href = "/cms";
+    const path = window.location.pathname
+    if (user) {
+        if (path === "/cms" || path === "/cms/register") {
+            window.location.replace("/cms/dashboard");
+        }
+    } else {
+        if (path === "/cms" || path === "/cms/register") {
+        } else {
+            alert("Niet ingelogd!");
+            window.location.replace("/cms");
         }
     }
 });
 
-document.getElementById("login-button").onclick = ev => {
-    const usernameInput = document.getElementById("username-input");
-    const passwordInput = document.getElementById("password-input");
+if (loginButton) {
+    loginButton.onclick = () => {
+        const usernameInput = document.getElementById("username-input");
+        const passwordInput = document.getElementById("password-input");
 
-    if (usernameInput.value.length !== 0 && passwordInput.value.length !== 0) {
-        if (!usernameInput.checkValidity()) {
-            usernameInput.reportValidity();
+        if (usernameInput.value.length !== 0 && passwordInput.value.length !== 0) {
+            if (!usernameInput.checkValidity()) {
+                usernameInput.reportValidity();
+            } else {
+                firebase.auth()
+                    .signInWithEmailAndPassword(usernameInput.value, passwordInput.value)
+                    .then(success => {
+                        firebase.auth().currentUser.getIdToken(true)
+                            .then(idToken => {
+                                post(window.location.href, {idToken: idToken});
+                            });
+                    })
+                    .catch(error => {
+                        alert("E-mail en/of wachtwoord is incorrect!")
+                    });
+            }
         } else {
-            firebase.auth()
-                .signInWithEmailAndPassword(usernameInput.value, passwordInput.value)
-                .then(success => {
-                    firebase.auth().currentUser.getIdToken(true)
-                        .then(idToken => {
-                            post(window.location.href, {idToken: idToken});
-                        });
-                })
-                .catch(error => {
-                    alert("E-mail en/of wachtwoord is incorrect!")
-                });
+            passwordInput.reportValidity();
+            usernameInput.reportValidity();
         }
-    } else {
-        passwordInput.reportValidity();
-        usernameInput.reportValidity();
     }
+}
+
+if (registerButton) {
+    registerButton.onclick = ev => {
+        const usernameInput = document.getElementById("username-input");
+        const passwordInput = document.getElementById("password-input");
+        const passwordRepeatInput = document.getElementById("password-repeat-input");
+
+        const isInputNotEmpty = (usernameInput.value.length !== 0 && passwordInput.value.length !== 0 && passwordRepeatInput.value.length !== 0)
+        const isInputValid = (usernameInput.checkValidity() && passwordInput.checkValidity() && passwordRepeatInput.checkValidity());
+
+        if (isInputNotEmpty) {
+            if (!isInputValid) {
+                usernameInput.reportValidity();
+            } else {
+                if (passwordInput.value !== passwordRepeatInput.value) {
+                    alert("Wachtwoorden zijn niet gelijk!")
+                } else {
+                    post(window.location.href, {user: usernameInput.value, pass: passwordInput.value});
+                }
+            }
+        } else {
+            passwordRepeatInput.reportValidity();
+            passwordInput.reportValidity();
+            usernameInput.reportValidity();
+        }
+    }
+}
+
+if (logoutButton) {
+    logoutButton.onclick = ev => {
+        let logoutConfirm = confirm("Wil je uitloggen?");
+        if (logoutConfirm === true) {
+            firebase.auth().signOut();
+        }
+    }
+
 }
 
 function post(path, params, method = 'post') {

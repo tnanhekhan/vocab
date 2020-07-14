@@ -38,7 +38,7 @@ app.intent('Woordjes', (conv, {gesprokenWoord}) => {
 });
 
 app.intent('Fallback', conv => {
-    conv.close('Er gaat wat mis');
+    conv.ask('Zeg, "ja", als je wilt beginnen!');
 });
 
 module.exports = app;

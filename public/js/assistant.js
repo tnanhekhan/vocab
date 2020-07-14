@@ -40,13 +40,13 @@ function updateCanvas(data) {
 
 function showWelcome() {
     let welkom = document.getElementById('woordjes');
-    welkom.innerHTML = `<h1 id="greeting">Welkom!</h1>`;
+    welkom.innerHTML = `<img id="didi-welcome" src="img/didi/didi-bird.jpg"><h1 id="greeting">Welkom!</h1>`;
 }
 
 function showGoodbye() {
     let groet = document.getElementById('woordjes');
     groet.innerHTML = '';
-    groet.innerHTML = `<h1 id="goodbye">Totziens!</h1>`;
+    groet.innerHTML = `<img id="didi-goodbye" src="img/didi/didi-bird-goodbye.jpg"><h1 id="goodbye">Totziens!</h1>`;
 }
 
 function displayWoordjes(){
