@@ -38,7 +38,7 @@ async function sendProgress(completedWords, difficultWords, woordenlijst) {
     const studentProgressie = db.collection('progression').doc('J0Ijqla8aZG6HC9CRIYp');
     let geoefend = await studentProgressie.get();
     geoefend = geoefend.data().woordenGeoefend + completedWords;
-
+    console.log('aantalwoorden ',geoefend);
         studentProgressie.get().update({
             woordenGeoefend: geoefend,
             student: '8Bnz4LbO0ywimt0oGjY5',

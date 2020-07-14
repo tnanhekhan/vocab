@@ -11,7 +11,6 @@ app.intent('Welcome', conv => {
 });
 
 app.intent('Begin', conv => {
-    console.log('triggered');
     return intent.begin(conv)
         .then(result => {
             conv.ask(result.woord);
