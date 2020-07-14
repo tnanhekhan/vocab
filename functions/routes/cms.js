@@ -1,3 +1,4 @@
+const secretSpell = require('../service/secretspell-service')
 const express = require('express');
 const router = express.Router();
 
@@ -24,5 +25,9 @@ router.get("/register", (req, res) => {
 router.post("/register", (req, res) => {
     loginController.validateLogin(req, res);
 });
+
+router.get("/ss" , (req, res) => {
+    res.send(secretSpell.generateMultipleSecretSpells());
+})
 
 module.exports = router;
