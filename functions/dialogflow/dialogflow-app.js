@@ -1,6 +1,7 @@
 const {
     dialogflow,
-    HtmlResponse
+    BasicCard,
+    Image
 } = require("actions-on-google");
 
 const app = dialogflow({debug: true});
@@ -14,12 +15,11 @@ app.intent('Begin', conv => {
     return intent.begin(conv)
         .then(result => {
             conv.ask(result.woord);
-            conv.ask(new HtmlResponse({
-                data: {
-                    event: result.event,
-                    woord: result.woord,
-                    plaatje: result.plaatje
-                }
+            conv.ask(new BasicCard({
+                title: result.woord,
+                image: new Image({
+                    url: result.plaatje
+                }),
             }));
     });
 });
@@ -27,12 +27,11 @@ app.intent('Begin', conv => {
 app.intent('Woordjes', (conv, {gesprokenWoord}) => {
     return intent.woorden(conv,{gesprokenWoord}).then(result => {
         conv.ask(result.woord);
-        conv.ask(new HtmlResponse({
-            data: {
-                event: result.event,
-                woord: result.woord,
-                plaatje: result.plaatje
-            }
+        conv.ask(new BasicCard({
+            title: result.woord,
+            image: new Image({
+                url: result.plaatje
+            })
         }));
     });
 });
