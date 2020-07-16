@@ -194,6 +194,7 @@ exports.lijstUploaden = (req,res) => {
     let klas = req.params.classId;
 
     function addSpell() {
+        //TODO: duplicate check
         db.collection("spells").where("spell", "==", true).get().then(spellSnapshot => {
             return spellSnapshot.docs.map(spell => {
                 return {
