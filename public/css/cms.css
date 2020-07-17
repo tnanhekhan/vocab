@@ -138,15 +138,34 @@ main {
     border-radius: 50px;
 }
 
-/*add student manually*/
-#word-list-name-form-manual > *{
-    margin : 0;
+#word-list-name-form-manual {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#word-list-name-form-manual > input[type=submit] {
+    width: 18vw;
+}
+
+#word-list-name-form-manual > * {
+    margin: 4px;
+}
+
+#new-class-form {
+    display: flex;
+    align-content: center;
+}
+
+#new-class-form > input{
+    margin-top: auto;
+    margin-bottom: 40px;
 }
 
 .content-detail-student-manual {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(4,1fr);
+    grid-template-rows: repeat(4, 1fr);
 
     height: 45vh;
 }
@@ -338,7 +357,7 @@ main {
     background: #fff1ef;
 }
 
-#users-content-header{
+#users-content-header, #class-content-header {
     display: flex;
     flex-direction: row;
 }
@@ -347,12 +366,16 @@ main {
     margin-left: auto;
 }
 
-.user-item{
+#class-content-header > a {
+    margin-left: auto;
+}
+
+.user-item {
     display: flex;
     flex-direction: row;
 }
 
-.user-item > input[type=submit]{
+.user-item > input[type=submit] {
     margin-left: auto;
 }
 
