@@ -4,19 +4,22 @@ const functions = require('firebase-functions');
 const createError = require('http-errors');
 const fileMiddleware = require('express-multipart-file-parser')
 const path = require('path');
+const cookieParser = require("cookie-parser");
+const compression = require('compression');
 const express = require('express');
 const cmsRouter = require('./routes/cms');
 const wordListsRouter = require('./routes/word-lists');
 const classListsRouter = require('./routes/class-lists');
 const usersRouter = require('./routes/users')
 const expressApp = express();
-
 //import dialogflow app
 const app = require('./dialogflow/dialogflow-app');
 
 expressApp.set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
     .use(fileMiddleware)
+    .use(cookieParser())
+    .use(compression())
     .use(express.static(path.join(__dirname, 'public')))
     .use(express.json())
     .use(express.urlencoded({extended: true}))

@@ -1,4 +1,5 @@
 const fb = require("../../firebase");
+const secretSpell = require('../../service/secretspell-service')
 const bucket = fb.storage().bucket();
 const db = fb.firestore();
 
@@ -53,25 +54,43 @@ exports.getStudent = (req, res) => {
                     return progress.docs;
                 })
                 .then(studentProgress => {
-                    let data = studentProgress.map(data => {
+                    return studentProgress.map(data => {
                         return {
                             moeilijkeWoorden: data.data().moeilijkeWoorden,
                             lijst: data.data().woordenlijst,
                             aantalWoorden: data.data().wordsCompleted,
                         }
                     });
-                    res.render('classlists/student-detail', {
-                        title: "CMS",
-                        dest: "classlists",
-                        firstname: student.data().voornaam,
-                        lastname: student.data().achternaam,
-                        moeite: data[0].moeilijkeWoorden,
-                        lijst: data[0].lijst,
-                        aantalGeoefend: data[0].aantalWoorden
-                    });
-                }).catch(e => {
-                console.log(e)
-            });
+                })
+                .then(data => {
+                    db.collection("spells").where('student', '==', student.id).get()
+                        .then(spellSnapshot => {
+                            res.render('classlists/student-detail', {
+                                title: "CMS",
+                                dest: "classlists",
+                                firstname: student.data().voornaam,
+                                lastname: student.data().achternaam,
+                                moeite: data[0].moeilijkeWoorden,
+                                lijst: data[0].lijst,
+                                aantalGeoefend: data[0].aantalWoorden,
+                                spell: spellSnapshot.docs[0].data().spell
+                            });
+                        }).catch(() => {
+                        res.render('classlists/student-detail', {
+                            title: "CMS",
+                            dest: "classlists",
+                            firstname: student.data().voornaam,
+                            lastname: student.data().achternaam,
+                            moeite: data[0].moeilijkeWoorden,
+                            lijst: data[0].lijst,
+                            aantalGeoefend: data[0].aantalWoorden,
+                            spell: null
+                        });
+                    })
+                })
+                .catch(e => {
+                    console.log(e)
+                });
         })
 };
 
@@ -173,7 +192,39 @@ exports.lijstUploaden = (req,res) => {
     let student = req.body.student;
     let lijst = req.params.listId;
     let klas = req.params.classId;
+
+    function addSpell() {
+        //TODO: duplicate check
+        db.collection("spells").where("spell", "==", true).get().then(spellSnapshot => {
+            return spellSnapshot.docs.map(spell => {
+                return {
+                    spell: spell.data().spell
+                }
+            });
+        }).then(spells => {
+            const spell = secretSpell.generateSecretSpell();
+            db.collection("spells").add({
+                spell: spell,
+                student: student,
+                wordlist: lijst
+            }).then(onSuccess => {
+                res.redirect(`/cms/class-lists/${klas}`);
+            })
+        });
+    }
+
     db.collection('students').doc(student)
-        .update({woordenlijst: lijst});
-    res.redirect(`/cms/class-lists/${klas}`);
+        .update({woordenlijst: lijst})
+        .then(() => {
+            db.collection("spells").where("student", "==", student)
+                .get()
+                .then(spellSnapshot => {
+                    db.collection("spells").doc(spellSnapshot.docs[0].id).delete().then(success => {
+                        addSpell();
+                    })
+                })
+                .catch(() => {
+                    addSpell();
+                })
+        })
 };
