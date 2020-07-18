@@ -1,6 +1,4 @@
 const express = require('express');
-const fb = require("../firebase");
-const db = fb.firestore();
 const router = express.Router();
 
 const classListsController = require('../controllers/classlist-constrollers/classlist-controller');

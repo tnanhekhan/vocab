@@ -319,6 +319,15 @@ main {
     border-radius: 16px;
 }
 
+#logout-container {
+    display: flex;
+    background-color: white;
+    margin: 64px;
+    padding: 16px;
+    justify-content: space-evenly;
+    border-radius: 16px;
+}
+
 #register-container {
     display: flex;
     flex-direction: column;

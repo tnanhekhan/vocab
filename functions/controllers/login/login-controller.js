@@ -6,7 +6,8 @@ exports.getLogin = (req, res) => {
 
 exports.validateLogin = (req, res) => {
     repo.validateLogin(req.body.idToken)
-        .then(onSuccess => {
+        .then(cookie => {
+            res.cookie('session', cookie);
             res.redirect("/cms/dashboard");
         })
         .catch(onError => {
@@ -16,4 +17,23 @@ exports.validateLogin = (req, res) => {
 
 exports.getRegister = (req, res) => {
     res.render("login/register", {title: "CMS"});
+}
+
+exports.verifyCookie = (req, res, next) => {
+    if (req.cookies.session) {
+        repo.validateCookie(req.cookies.session)
+            .then(() => {
+                next();
+            })
+            .catch(() => {
+                res.redirect("/cms");
+            })
+    } else {
+        res.redirect("/cms");
+    }
+}
+
+exports.logout = (req, res) => {
+    res.clearCookie("session");
+    res.render("login/logout", {title: "CMS"});
 }
