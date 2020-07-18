@@ -324,7 +324,9 @@ main {
     background-color: white;
     margin: 64px;
     padding: 16px;
+    flex-direction: column;
     justify-content: space-evenly;
+    align-items: center;
     border-radius: 16px;
 }
 
