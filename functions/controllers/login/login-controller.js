@@ -1,13 +1,24 @@
 const repo = require("../../data/login/login-repository");
 
 exports.getLogin = (req, res) => {
-    res.render("login/login", {title: "CMS"});
+    if (req.cookies["__session"]) {
+        repo.validateCookie(req.cookies["__session"])
+            .then(() => {
+                res.redirect("/cms/dashboard");
+            })
+            .catch(() => {
+                res.render("login/login", {title: "CMS"});
+            })
+    } else {
+        res.render("login/login", {title: "CMS"});
+    }
 }
 
 exports.validateLogin = (req, res) => {
     repo.validateLogin(req.body.idToken)
         .then(cookie => {
-            res.cookie('session', cookie);
+            res.setHeader('Cache-Control', 'private');
+            res.cookie('__session', cookie);
             res.redirect("/cms/dashboard");
         })
         .catch(onError => {
@@ -20,8 +31,8 @@ exports.getRegister = (req, res) => {
 }
 
 exports.verifyCookie = (req, res, next) => {
-    if (req.cookies.session) {
-        repo.validateCookie(req.cookies.session)
+    if (req.cookies["__session"]) {
+        repo.validateCookie(req.cookies["__session"])
             .then(() => {
                 next();
             })
@@ -34,6 +45,6 @@ exports.verifyCookie = (req, res, next) => {
 }
 
 exports.logout = (req, res) => {
-    res.clearCookie("session");
+    res.clearCookie("__session");
     res.render("login/logout", {title: "CMS"});
 }
