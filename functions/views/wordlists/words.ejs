@@ -5,17 +5,30 @@
     <div class="content">
         <form id="word-list-name-form" method="post" onsubmit="return confirm('Wil je de wijzigingen opslaan?')">
             <% if(listName.length != 0) { %>
-                <input type="text" class="form-input" name="listName" value="<%= listName %>" required><br>
+                <div>
+                    <label for="listName">Woordenlijst titel:</label>
+                    <input id="listName" type="text" class="form-input" name="listName" value="<%= listName %>"
+                           required>
+                </div>
                 <input type="hidden" name="listId" value="<%= listId %>">
-                <input class="form-button success-button" name="save-wordlist" type="submit" value="Updaten">
-                <input class="form-button cancel-button" name="delete-wordlist" type="submit" value="Verwijderen">
+                <div class="list-name-form-buttons">
+                    <input class="form-button success-button" name="save-wordlist" type="submit" value="Titel Updaten">
+                    <input class="form-button cancel-button" name="delete-wordlist" type="submit" value="Verwijderen">
+                </div>
             <% } else { %>
-                <input type="text" class="form-input" name="listName" value="<%= listName %>" required><br>
+                <div>
+                    <label for="listName">Woordenlijst titel:</label>
+                    <input id="listName" type="text" class="form-input" name="listName" value="<%= listName %>"
+                           required>
+                </div>
                 <input type="hidden" name="listId" value="<%= listId %>">
-                <input class="form-button success-button" name="save-wordlist" type="submit" value="Aanmaken">
-                <input class="form-button cancel-button" name="delete-wordlist" type="submit" value="Annuleren">
+                <div class="list-name-form-buttons">
+                    <input class="form-button success-button" name="save-wordlist" type="submit" value="Titel Updaten">
+                    <input class="form-button cancel-button" name="delete-wordlist" type="submit" value="Verwijderen">
+                </div>
             <% } %>
         </form>
+        <hr>
         <div class="words-container">
             <% if(typeof (words) != "undefined") { %>
                 <% if(listName.length != 0) { %>

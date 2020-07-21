@@ -155,13 +155,12 @@ main {
     grid-row: 1 / -1;
 }
 
-.wordlist-item, .student-item {
+.wordlist-item {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: relative;
-    padding-top: 16px;
+    padding: 8px;
     box-shadow: 0 0 0 transparent;
     border: 0 solid transparent;
     text-shadow: 0 0 0 transparent;
@@ -206,6 +205,11 @@ main {
     margin-left: 16px;
 }
 
+.listview-content > hr {
+    margin-left: 32px;
+    margin-right: 16px;
+}
+
 .add {
     color: #fe3c2f;
     font-size: 22px;
@@ -219,9 +223,10 @@ main {
     flex-direction: column;
 }
 .words-container {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, max-content));
+    grid-gap: 16px;
+    justify-content: center;
 }
 
 .wordlist-add-container {
@@ -261,6 +266,14 @@ main {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    align-items: center;
+}
+
+.list-name-form-buttons{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
 #class-list-form > div > input{
