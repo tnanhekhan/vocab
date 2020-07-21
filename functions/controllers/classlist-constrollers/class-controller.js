@@ -16,7 +16,6 @@ exports.getClass = (req, res) => {
         try {
             return await bucket.file(id).get();
         } catch (e) {
-            console.log(e);
         }
     }
 
@@ -90,9 +89,6 @@ exports.getStudent = (req, res) => {
                             spell: null
                         });
                     })
-                })
-                .catch(e => {
-                    console.log(e)
                 });
         })
 };

@@ -1,7 +1,7 @@
 const repo = require("../../data/users/users-repository");
 
 exports.getUsers = (req, res) => {
-    repo.getUsers()
+    repo.getUsers(req)
         .then(users => {
             res.render("users/users", {title: "CMS", dest: "users", users: users});
         });

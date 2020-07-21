@@ -72,7 +72,6 @@ exports.updateWord = (req, res) => {
             const {mimetype, buffer} = req.files[0]
             repo.saveImage(req.params.wordId, buffer, mimetype)
                 .then(() => {
-                    console.log("File uploaded");
                 });
         }
     }

@@ -17,7 +17,7 @@
                 <input class="form-button cancel-button" name="delete-wordlist" type="submit" value="Annuleren">
             <% } %>
         </form>
-        <div class="wordlists-container">
+        <div class="words-container">
             <% if(typeof (words) != "undefined") { %>
                 <% if(listName.length != 0) { %>
                     <% words.sort((a, b) => (a.data().timestamp > b.data().timestamp) ? 1 : ((b.data().timestamp > a.data().timestamp) ? -1 : 0)) %>

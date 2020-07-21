@@ -71,7 +71,13 @@ main {
     border-radius: 16px;
 }
 
-.content > #lijst-toewijzen > button{
+.listview-content {
+    background-color: white;
+    padding: 8px 32px 32px 0px;
+    border-radius: 16px;
+}
+
+.content > #lijst-toewijzen > button {
     width: fit-content;
 }
 
@@ -159,12 +165,49 @@ main {
     margin: 16px;
 }
 
+.rect-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    position: relative;
+    padding-top: 16px;
+    box-shadow: 0 0 0 transparent;
+    border: 0 solid transparent;
+    text-shadow: 0 0 0 transparent;
+    height: 6vh;
+    width: 100%;
+    text-decoration: none;
+    color: black;
+    background: #fff1ef;
+    cursor: pointer;
+    border-radius: 16px;
+    margin: 16px;
+    padding-left: 32px;
+}
+
+.student {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.listview-content > h2{
+    margin-left: 16px;
+}
+
 .add {
     color: #fe3c2f;
     font-size: 22px;
+    align-items: center;
+    padding-left: 0;
 }
 
 .wordlists-container, .students-container {
+    display: flex;
+    flex-direction: column;
+}
+.words-container {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-evenly;
@@ -266,7 +309,12 @@ main {
     text-decoration: none;
 }
 
-.red-letter{
+.rect-link {
+    text-decoration: none;
+    width: 100%;
+}
+
+.red-letter {
     color: #fe3c2f;
 }
 
@@ -385,4 +433,8 @@ main {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+}
+
+.large-button {
+    width: 98%;
 }

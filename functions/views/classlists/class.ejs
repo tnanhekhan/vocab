@@ -1,30 +1,26 @@
 <%- include ("../partials/head.ejs") %>
 
 <main>
-    <h1 class="header">Klassenlijsten</h1>
-    <div class="content">
-        <div id="class-content-header">
-            <h2><%= klas %></h2>
-            <a id="lijst-toewijzen" href="<%= klasId %>/lijst-toewijzen"><button class="form-button delete-button">Lijst toewijzen aan kinderen</button></a>
-        </div>
+    <h1 class="header">Klas: <%= klas %></h1>
+    <div class="listview-content">
         <div class="students-container">
             <% if(klas.length !== 0) { %>
                 <% if(studenten.length > 0) { %>
                     <% studenten.forEach(student => { %>
                         <a class="square-link" href="<%= klasId %>/<%= student.id %>">
-                            <button class="wordlist-item">
-                                <img src="/img/150.png" width="80%">
-                                <%= student.data().voornaam + ' ' + student.data().achternaam %></button>
+                            <button class="rect-item student">
+                                <%= student.data().voornaam + ' ' + student.data().achternaam %>
+                                <a id="lijst-toewijzen" href="<%= klasId %>/lijst-toewijzen">
+                                    Lijst Toewijzen
+                                </a>
+                            </button>
                         </a>
                     <% }) %>
                 <% } %>
-                <% for (var i = 0; i < 53; i++) { %>
-                    <a class="square-link" href="<%= klasId %>/add">
-                        <button class="wordlist-item add">+</button>
-                    </a>
-                <% } %>
+                <a class="square-link" href="<%= klasId %>/add">
+                    <button class="rect-item add">+</button>
+                </a>
             <% } %>
-
         </div>
     </div>
 </main>
