@@ -8,6 +8,7 @@
 body {
     background-color: #fff1ef;
     font-family: Avenir, Verdana, sans-serif;
+    overflow-y: overlay;
 }
 
 .sidenav {
