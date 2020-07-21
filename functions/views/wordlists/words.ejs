@@ -1,9 +1,8 @@
 <%- include ("../partials/head.ejs") %>
 
 <main>
-    <h1 class="header">Woordenlijsten</h1>
+    <h1 class="header">Woordenlijst: <%= listName %></h1>
     <div class="content">
-        <h2>Woordenlijst naam</h2>
         <form id="word-list-name-form" method="post" onsubmit="return confirm('Wil je de wijzigingen opslaan?')">
             <% if(listName.length != 0) { %>
                 <input type="text" class="form-input" name="listName" value="<%= listName %>" required><br>
@@ -37,12 +36,9 @@
                             </a>
                         <% } %>
                     <% }); %>
-
-                    <% for (var i = 0; i < 53; i++) { %>
                         <a class="square-link" href="<%= listId %>/add">
                             <button class="wordlist-item add">+</button>
                         </a>
-                    <% } %>
                 <% } %>
             <% } %>
         </div>

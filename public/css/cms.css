@@ -81,6 +81,15 @@ main {
     width: fit-content;
 }
 
+#lijst-toewijzen {
+    text-decoration: none;
+    color: white;
+    background-color: black;
+    margin: 16px;
+    padding: 16px;
+    border-radius: 16px;
+}
+
 #progress-bar {
     width: 100%;
     background-color: #fff1ef;
@@ -170,12 +179,10 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: start;
-    position: relative;
-    padding-top: 16px;
     box-shadow: 0 0 0 transparent;
     border: 0 solid transparent;
     text-shadow: 0 0 0 transparent;
-    height: 6vh;
+    height: 8vh;
     width: 100%;
     text-decoration: none;
     color: black;
@@ -184,12 +191,14 @@ main {
     border-radius: 16px;
     margin: 16px;
     padding-left: 32px;
+    outline: none;
 }
 
 .student {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    cursor: default;
 }
 
 .listview-content > h2{
@@ -201,6 +210,7 @@ main {
     font-size: 22px;
     align-items: center;
     padding-left: 0;
+    cursor: pointer;
 }
 
 .wordlists-container, .students-container {
@@ -307,6 +317,7 @@ main {
 
 .square-link {
     text-decoration: none;
+    color: black;
 }
 
 .rect-link {
