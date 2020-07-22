@@ -15,7 +15,6 @@ exports.getClassLists = (req, res) => {
             res.render("classlists/classlists", {title: "CMS", dest: "classlists", klas: klas});
         })
         .catch(err => {
-            console.log('Error getting documents', err);
         });
 };
 

@@ -2,23 +2,48 @@
 
 <main>
     <h1 class="header"><%= firstname + ' ' + lastname %></h1>
-    <div class="student-image">
-    </div>
     <div class="content-detail-student">
-        <h1><%= firstname %></h1>
-        <div><h3>Moeilijke lijsten</h3>
+        <div class="student-detail-header">
+            <h1><%= firstname %></h1>
         </div>
-        <div><h3>Moeilijke woorden</h3>
-            <% moeite.forEach((woord) => { %>
-                <li><%= woord.word %></li>
-            <% }); %>
+        <hr>
+        <div class="student-detail-assigned">
+            <div><h3>Toegewezen lijst</h3>
+                <% if(!lijst) { %>
+                    <p>geen lijst toegewezen</p>
+                <% } else { %>
+                    <li><%= lijst %></li>
+                <% } %>
+            </div>
+            <div><h3>Moeilijke lijsten</h3>
+            </div>
+            <div><h3>Moeilijke woorden</h3>
+                <% moeite.forEach((woord) => { %>
+                    <li><%= woord.word %></li>
+                <% }); %>
+            </div>
         </div>
-        <div><h3>Toegewezen lijst</h3>
-            <% if(!lijst) { %>
-                <p>geen lijst toegewezen</p>
-            <% } else { %>
-                <li><%= lijst %></li>
-            <% } %>
+
+        <hr>
+        <div class="student-detail-progression">
+            <div class="voortgang">
+                <h3>Voortgang - week</h3>
+                <div id="progress-bar">
+                    <div id="progress-percentage"></div>
+                    <% if(aantalGeoefend > 0) { %>
+                        <p><%= aantalGeoefend %>/100 woorden</p>
+                    <% } else { %>
+                        <p>0/100 woorden</p>
+                    <% } %>
+                </div>
+            </div>
+            <div class="totaal">
+                <h3>Totaal</h3>
+                <div id="progress-bar">
+                    <div id="total-percentage"></div>
+                    <p>0/3000</p>
+                </div>
+            </div>
         </div>
 
         <% if(spell) { %>
@@ -27,24 +52,6 @@
                 <p><%= spell %></p>
             </div>
         <% } %>
-        <div class="voortgang">
-            <h3>voortgang - week</h3>
-            <div id="progress-bar">
-                <div id="progress-percentage"></div>
-                <% if(aantalGeoefend > 0) { %>
-                    <p><%= aantalGeoefend %>/100 woorden</p>
-                <% } else { %>
-                    <p>0/100 woorden</p>
-                <% } %>
-            </div>
-        </div>
-        <div class="totaal">
-            <h3>totaal</h3>
-            <div id="progress-bar">
-                <div id="total-percentage"></div>
-                <p>0/3000</p>
-            </div>
-        </div>
     </div>
 </main>
 <script>

@@ -13,11 +13,14 @@
     <title><%= title %></title>
 </head>
 <body>
-
+<div id="spinner" class="lds-ring"><div></div><div></div><div></div><div></div></div>
 <div id="auth-container">
+    <h1><span>v</span><span class="red-letter">o</span><span>c</span><span class="red-letter">a</span><span>b</span>
+    </h1>
+    <h3 id="login-subtitle">Voice Vocabulary Content Management Systeem</h3>
+    <button id="show-login-button" class="form-button success-button">inloggen</button>
+
     <div id="login-form" class="auth-form">
-        <h1><span>v</span><span class="red-letter">o</span><span>c</span><span class="red-letter">a</span><span>b</span>
-        </h1>
         <input id="username-input" class="form-input" type="email" placeholder="e-mail" name="user" required>
         <input id="password-input" class="form-input" type="password" placeholder="wachtwoord" name="pass" autocomplete="on"
                required>

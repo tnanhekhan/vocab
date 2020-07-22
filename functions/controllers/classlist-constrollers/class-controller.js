@@ -16,7 +16,6 @@ exports.getClass = (req, res) => {
         try {
             return await bucket.file(id).get();
         } catch (e) {
-            console.log(e);
         }
     }
 
@@ -65,15 +64,18 @@ exports.getStudent = (req, res) => {
                 .then(data => {
                     db.collection("spells").where('student', '==', student.id).get()
                         .then(spellSnapshot => {
-                            res.render('classlists/student-detail', {
-                                title: "CMS",
-                                dest: "classlists",
-                                firstname: student.data().voornaam,
-                                lastname: student.data().achternaam,
-                                moeite: data[0].moeilijkeWoorden,
-                                lijst: data[0].lijst,
-                                aantalGeoefend: data[0].aantalWoorden,
-                                spell: spellSnapshot.docs[0].data().spell
+                            db.collection("wordlists").doc(spellSnapshot.docs[0].data().wordlist).get()
+                                .then(wordlistSnapshot => {
+                                    res.render('classlists/student-detail', {
+                                        title: "CMS",
+                                        dest: "classlists",
+                                        firstname: student.data().voornaam,
+                                        lastname: student.data().achternaam,
+                                        moeite: data[0].moeilijkeWoorden,
+                                        lijst: wordlistSnapshot.data().name,
+                                        aantalGeoefend: data[0].aantalWoorden,
+                                        spell: spellSnapshot.docs[0].data().spell
+                                });
                             });
                         }).catch(() => {
                         res.render('classlists/student-detail', {
@@ -87,9 +89,6 @@ exports.getStudent = (req, res) => {
                             spell: null
                         });
                     })
-                })
-                .catch(e => {
-                    console.log(e)
                 });
         })
 };

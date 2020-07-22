@@ -2,13 +2,8 @@
 
 <main>
     <h1 class="header">Gebruikers</h1>
-    <div class="content">
-        <div id="users-content-header">
-            <h2>Beheer gebruikers</h2>
-            <a href="/cms/users/add">
-                <button class="form-button success-button">gebruiker toevoegen</button>
-            </a>
-        </div>
+    <div class="listview-content">
+        <h2>Beheer gebruikers</h2>
         <% users.forEach(user => { %>
             <form class="user-item" method="post" onsubmit="return confirm('Wil je <%= user.email%> verwijderen?')">
                 <input class="form-input" type="text" value="<%= user.email %>">
@@ -17,6 +12,9 @@
             </form>
             <hr>
         <% }); %>
+        <a href="/cms/users/add">
+            <button class="form-button success-button large-button">gebruiker toevoegen</button>
+        </a>
     </div>
 </main>
 

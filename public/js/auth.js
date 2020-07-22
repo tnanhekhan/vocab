@@ -1,10 +1,25 @@
 const loginButton = document.getElementById("login-button");
 const logoutButton = document.getElementById("logout-button");
 const registerButton = document.getElementById("register-send-button");
+const showLoginButton = document.getElementById("show-login-button");
+const loginForm = document.getElementById("login-form");
+const loginSubtitle = document.getElementById("login-subtitle");
 const path = window.location.pathname
+
+window.addEventListener("beforeunload", () => {
+    document.getElementById("spinner").style.display = "inline-block";
+});
 
 if (path === "/cms/logout") {
     firebase.auth().signOut();
+}
+
+if (showLoginButton) {
+    showLoginButton.onclick = () => {
+        showLoginButton.style.display = "none";
+        loginSubtitle.style.display = "none";
+        loginForm.style.display = "flex";
+    }
 }
 
 if (loginButton) {

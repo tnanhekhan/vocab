@@ -1,23 +1,35 @@
 <%- include ("../partials/head.ejs") %>
 
 <main>
-    <h1 class="header">Woordenlijsten</h1>
+    <h1 class="header">Woordenlijst: <%= listName %></h1>
     <div class="content">
-        <h2>Woordenlijst naam</h2>
         <form id="word-list-name-form" method="post" onsubmit="return confirm('Wil je de wijzigingen opslaan?')">
             <% if(listName.length != 0) { %>
-                <input type="text" class="form-input" name="listName" value="<%= listName %>" required><br>
+                <div>
+                    <label for="listName">Woordenlijst Naam:</label>
+                    <input id="listName" type="text" class="form-input" name="listName" value="<%= listName %>"
+                           required>
+                </div>
                 <input type="hidden" name="listId" value="<%= listId %>">
-                <input class="form-button success-button" name="save-wordlist" type="submit" value="Updaten">
-                <input class="form-button cancel-button" name="delete-wordlist" type="submit" value="Verwijderen">
+                <div class="list-name-form-buttons">
+                    <input class="form-button success-button" name="save-wordlist" type="submit" value="Titel Updaten">
+                    <input class="form-button cancel-button" name="delete-wordlist" type="submit" value="Verwijderen">
+                </div>
             <% } else { %>
-                <input type="text" class="form-input" name="listName" value="<%= listName %>" required><br>
+                <div>
+                    <label for="listName">Woordenlijst Naam:</label>
+                    <input id="listName" type="text" class="form-input" name="listName" value="<%= listName %>"
+                           required>
+                </div>
                 <input type="hidden" name="listId" value="<%= listId %>">
-                <input class="form-button success-button" name="save-wordlist" type="submit" value="Aanmaken">
-                <input class="form-button cancel-button" name="delete-wordlist" type="submit" value="Annuleren">
+                <div class="list-name-form-buttons">
+                    <input class="form-button success-button" name="save-wordlist" type="submit" value="Titel Updaten">
+                    <input class="form-button cancel-button" name="delete-wordlist" type="submit" value="Verwijderen">
+                </div>
             <% } %>
         </form>
-        <div class="wordlists-container">
+        <hr>
+        <div class="words-container">
             <% if(typeof (words) != "undefined") { %>
                 <% if(listName.length != 0) { %>
                     <% words.sort((a, b) => (a.data().timestamp > b.data().timestamp) ? 1 : ((b.data().timestamp > a.data().timestamp) ? -1 : 0)) %>
@@ -37,12 +49,9 @@
                             </a>
                         <% } %>
                     <% }); %>
-
-                    <% for (var i = 0; i < 53; i++) { %>
                         <a class="square-link" href="<%= listId %>/add">
                             <button class="wordlist-item add">+</button>
                         </a>
-                    <% } %>
                 <% } %>
             <% } %>
         </div>

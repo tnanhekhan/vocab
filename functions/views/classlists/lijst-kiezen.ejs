@@ -2,19 +2,14 @@
 
 <main>
     <h1 class="header">Klas: <%= klas %></h1>
-    <div class="content">
+    <div class="listview-content">
         <h2>Kies een lijst om toe te wijzen</h2>
         <div class="wordlists-container">
             <% lijsten.forEach(lijst => { %>
                 <a class="square-link" href="lijst-toewijzen/<%= lijst.id %>">
-                    <button class="student-item"><%= lijst.naam %></button>
+                    <button class="rect-item"><%= lijst.naam %></button>
                 </a>
             <% }); %>
-            <% for (var i = 0; i < (15 - lijsten.length); i++) { %>
-                <a class="square-link" href="class-lists/add-class">
-                    <button class="wordlist-item add">+</button>
-                </a>
-            <% } %>
         </div>
     </div>
 </main>
