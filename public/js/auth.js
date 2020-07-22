@@ -1,21 +1,26 @@
 const loginButton = document.getElementById("login-button");
 const logoutButton = document.getElementById("logout-button");
 const registerButton = document.getElementById("register-send-button");
+const showLoginButton = document.getElementById("show-login-button");
+const loginForm = document.getElementById("login-form");
+const loginSubtitle = document.getElementById("login-subtitle");
+const path = window.location.pathname
 
-firebase.auth().onAuthStateChanged(user => {
-    const path = window.location.pathname
-    if (user) {
-        if (path === "/cms" || path === "/cms/register") {
-            window.location.replace("/cms/dashboard");
-        }
-    } else {
-        if (path === "/cms" || path === "/cms/register") {
-        } else {
-            alert("Niet ingelogd!");
-            window.location.replace("/cms");
-        }
-    }
+window.addEventListener("beforeunload", () => {
+    document.getElementById("spinner").style.display = "inline-block";
 });
+
+if (path === "/cms/logout") {
+    firebase.auth().signOut();
+}
+
+if (showLoginButton) {
+    showLoginButton.onclick = () => {
+        showLoginButton.style.display = "none";
+        loginSubtitle.style.display = "none";
+        loginForm.style.display = "flex";
+    }
+}
 
 if (loginButton) {
     loginButton.onclick = () => {
@@ -79,7 +84,6 @@ if (logoutButton) {
             firebase.auth().signOut();
         }
     }
-
 }
 
 function post(path, params, method = 'post') {

@@ -7,7 +7,6 @@ module.exports.getWords = (listId) => {
         try {
             return await bucket.file(id).get();
         } catch (e) {
-            console.log(e);
         }
     }
 
