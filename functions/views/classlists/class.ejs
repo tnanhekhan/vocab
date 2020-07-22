@@ -3,8 +3,10 @@
 <main>
     <h1 class="header">Klassenlijsten</h1>
     <div class="content">
-        <h2><%= klas %></h2>
-        <a id="lijst-toewijzen" href="<%= klasId %>/lijst-toewijzen"><button class="form-button delete-button">Lijst toewijzen aan kinderen</button></a>
+        <div id="class-content-header">
+            <h2><%= klas %></h2>
+            <a id="lijst-toewijzen" href="<%= klasId %>/lijst-toewijzen"><button class="form-button delete-button">Lijst toewijzen aan kinderen</button></a>
+        </div>
         <div class="students-container">
             <% if(klas.length !== 0) { %>
                 <% if(studenten.length > 0) { %>
