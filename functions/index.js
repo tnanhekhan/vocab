@@ -12,7 +12,7 @@ const usersRouter = require('./routes/users')
 const expressApp = express();
 
 //import dialogflow app
-const app = require('./dialogflow/dialogflow-app');
+const app = require('./dialogflow/dialogflowApp');
 
 expressApp.set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')

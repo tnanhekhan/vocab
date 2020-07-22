@@ -5,14 +5,14 @@ exports.welcome = conv => {
         conv.close('sorrie, dit apparaat understeund deze app niet!');
         return;
     }
-    conv.data.index = 0;
     conv.data.woordenlijst = [];
-    conv.ask('hi, welkom in de vocab app? Met mij kun je woordjes oefenen. Als je uitleg wilt, zeg dan / ik wil uitleg.\n' +
-        'Als je wilt oefenen zeg dan /ik wil oefenen');
+    conv.data.index = 0;
 };
 
 exports.lijstSpreuk = (conv, {spreuk}) => {
     return data.fetchList(spreuk).then(result => {
+        conv.data.lijst = result[0].list;
+        conv.data.student = result[0].student;
         return data.fetchName(result[0].student).then(name => {
             return data.fetchWoorden(result[0].list).then(woorden => {
                 conv.data.woordenlijst = woorden;
@@ -35,7 +35,13 @@ exports.woorden = (conv, {gesprokenWoord}) => {
     conv.data.incorrect_guesses = 0;
 
     if (gesprokenWoord === laatsteWoord) {
-        data.sendProgress(aantalWoorden, moeilijkeWoorden, 'list two');
+        data.sendProgress(aantalWoorden, moeilijkeWoorden, conv.data.lijst, conv.data.student);
+        //voor opnieuw oefenen van zelfde lijst.
+        conv.contexts.set('lijstspreuk-followup', 1);
+        return new Promise(resolve => {
+            conv.data.index = 0;
+            return resolve( result = {woord: 'Zeg stoppen als je wilt stoppen. Als je opnieuw zegt, beginnen we opnieuw.'});
+        });
     } else {
         if ((gesprokenWoord.toLowerCase() !== conv.data.woordenlijst[conv.data.index].woord.toLowerCase()) && (conv.data.incorrect_guesses < 1)) {
             conv.data.incorrect_guesses += 1;
@@ -56,3 +62,4 @@ exports.woorden = (conv, {gesprokenWoord}) => {
             });
     }
 };
+
