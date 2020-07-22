@@ -7,6 +7,7 @@ const path = require('path');
 const cookieParser = require("cookie-parser");
 const compression = require('compression');
 const express = require('express');
+const legalRouter = require("./routes/legal");
 const cmsRouter = require('./routes/cms');
 const wordListsRouter = require('./routes/word-lists');
 const classListsRouter = require('./routes/class-lists');
@@ -23,6 +24,7 @@ expressApp.set('views', path.join(__dirname, 'views'))
     .use(express.static(path.join(__dirname, 'public')))
     .use(express.json())
     .use(express.urlencoded({extended: true}))
+    .use('/', legalRouter)
     .use('/cms', cmsRouter)
     .use('/cms/word-lists', wordListsRouter)
     .use('/cms/class-lists', classListsRouter)
