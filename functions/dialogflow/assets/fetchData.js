@@ -1,4 +1,4 @@
-const fbConfig = require("../firebase");
+const fbConfig = require("../../firebase");
 const db = fbConfig.firestore();
 const bucket = fbConfig.storage().bucket();
 
@@ -40,13 +40,19 @@ async function fetchName(studentID) {
     return name.naam;
 }
 
-async function sendProgress(completedWords, difficultWords, woordenlijst) {
-    const studentProgressie = db.collection('progression').doc('J0Ijqla8aZG6HC9CRIYp');
+async function sendProgress(completedWords, difficultWords, woordenlijst, student) {
+    const studentProgressie = db.collection('progression').where('student', '==', student);
     let geoefend = await studentProgressie.get();
-    geoefend = geoefend.data().woordenGeoefend + completedWords;
+    let data = geoefend.docs.map(info => {
+        return {
+            aantalWoorden: info.data().woordenGeoefend
+        }
+    });
+    console.log('woorden ', data.woordenGeoefend);
+    geoefend = data.woordenGeoefend + completedWords;
     studentProgressie.get().update({
         woordenGeoefend: geoefend,
-        student: '8Bnz4LbO0ywimt0oGjY5',
+        student: student,
         moeilijkeWoorden: difficultWords,
         woordenlijst: woordenlijst
     });
