@@ -48,8 +48,8 @@ async function sendProgress(completedWords, difficultWords, woordenlijst, studen
             aantalWoorden: info.data().woordenGeoefend
         }
     });
-    console.log('woorden ', data.woordenGeoefend);
-    geoefend = data.woordenGeoefend + completedWords;
+    console.log('woorden ', data[0].aantalWoorden, ' progressie ', studentProgressie);
+    geoefend = data[0].aantalWoorden + completedWords;
     studentProgressie.get().update({
         woordenGeoefend: geoefend,
         student: student,

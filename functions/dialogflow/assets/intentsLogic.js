@@ -54,7 +54,7 @@ exports.woorden = (conv, {gesprokenWoord}) => {
             conv.data.woord = "";
             conv.data.incorrect_guesses = 0;
             conv.data.index += 1;
-            conv.ask('Goedzo, volgende vraag!');
+            conv.ask('Goed zo, volgende vraag!');
         }
         return data.fetchImages(conv.data.woordenlijst[conv.data.index].id)
             .then(result => {
