@@ -12,8 +12,7 @@ const wordListsRouter = require('./routes/word-lists');
 const classListsRouter = require('./routes/class-lists');
 const usersRouter = require('./routes/users')
 const expressApp = express();
-//import dialogflow app
-const app = require('./dialogflow/dialogflowApp');
+const dialogflow = require('./dialogflow/dialogflowApp');
 
 expressApp.set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs')
@@ -45,4 +44,4 @@ expressApp.use(function (err, req, res, next) {
 });
 
 exports.expressApp = functions.https.onRequest(expressApp);
-exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
+exports.dialogflowFirebaseFulfillment = functions.https.onRequest(dialogflow);
