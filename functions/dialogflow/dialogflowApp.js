@@ -9,7 +9,7 @@ const intent = require('./assets/intentsLogic');
 
 app.intent('Welcome', conv => {
     intent.welcome(conv);
-    conv.ask('hi, welkom in de vocab app? Met mij kun je woordjes oefenen. Als je uitleg wilt, zeg dan ' +
+    conv.ask('hi, welkom in de vocab app? Met mij kun je woordjes oefenen.' +
         'Als je wilt oefenen zeg dan /ik wil oefenen');
 });
 
@@ -30,9 +30,7 @@ app.intent('Woordjes', (conv, {gesprokenWoord}) => {
 });
 
 app.intent('spreuk', conv => {
-    conv.ask('Leuk dat je komt oefenen. ' +
-        'Wat is de geheime spreuk die je van je meester of juf hebt gekregen?' +
-        ' Als je geen spreuk hebt, zeg dan ik heb geen spreuk');
+    conv.ask('Leuk dat je komt oefenen. Wat is de geheime spreuk die je van je meester of juf hebt gekregen? Als je geen spreuk hebt zeg dan "ik heb geen spreuk".');
 });
 
 app.intent('lijst spreuk', (conv, {spreuk}) => {
@@ -60,7 +58,7 @@ app.intent('start', conv => {
 
 app.intent('geen spreuk', conv => {
     conv.ask('Iedere oefening begint met een spreuk. Je kunt je meester of juf een spreuk laten maken op "voicab.nl".' +
-        'Als je het nu wilt proberen is de oefenspreuk appel banaan');
+        'Als je het nu wilt proberen is de oefenspreuk "appel banaan"');
 });
 
 app.intent('uitleg', (conv) => {

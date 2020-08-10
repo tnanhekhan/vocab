@@ -1,6 +1,6 @@
 const data = require('./fetchData');
 
-exports.welcome = conv => {
+exports.welcome = (conv) => {
     if (!conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT')) {
         conv.close('sorrie, dit apparaat understeund deze app niet!');
         return;
@@ -35,7 +35,7 @@ exports.woorden = (conv, {gesprokenWoord}) => {
     conv.data.incorrect_guesses = 0;
 
     if (gesprokenWoord === laatsteWoord) {
-        data.sendProgress(aantalWoorden, moeilijkeWoorden, conv.data.lijst, conv.data.student);
+        data.sendProgress(conv.data.woordenlijst.length, moeilijkeWoorden, conv.data.lijst, conv.data.student);
         //voor opnieuw oefenen van zelfde lijst.
         conv.contexts.set('lijstspreuk-followup', 1);
         return new Promise(resolve => {
@@ -54,7 +54,7 @@ exports.woorden = (conv, {gesprokenWoord}) => {
             conv.data.woord = "";
             conv.data.incorrect_guesses = 0;
             conv.data.index += 1;
-            conv.ask('Goedzo, volgende vraag!');
+            conv.ask('Goed zo, volgende vraag!');
         }
         return data.fetchImages(conv.data.woordenlijst[conv.data.index].id)
             .then(result => {
