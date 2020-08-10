@@ -41,16 +41,17 @@ async function fetchName(studentID) {
 }
 
 async function sendProgress(completedWords, difficultWords, woordenlijst, student) {
-    const studentProgressie = db.collection('progression').where('student', '==', student);
-    let geoefend = await studentProgressie.get();
-    let data = geoefend.docs.map(info => {
+    const collectie = db.collection('progression').where('student', '==', student);
+    let studentData = await collectie.get();
+    let data = studentData.docs.map(info => {
         return {
-            aantalWoorden: info.data().woordenGeoefend
+            aantalWoorden: info.data().woordenGeoefend,
+            id: info.id
         }
     });
-    console.log('woorden ', data[0].aantalWoorden, ' progressie ', studentProgressie);
-    geoefend = data[0].aantalWoorden + completedWords;
-    studentProgressie.get().update({
+    let geoefend = data[0].aantalWoorden + completedWords;
+    console.log('data ', data.id);
+    studentData.update({
         woordenGeoefend: geoefend,
         student: student,
         moeilijkeWoorden: difficultWords,
@@ -58,8 +59,4 @@ async function sendProgress(completedWords, difficultWords, woordenlijst, studen
     });
 }
 
-module.exports.fetchList = fetchList;
-module.exports.fetchWoorden = fetchWoorden;
-module.exports.fetchImages = fetchImages;
-module.exports.fetchName = fetchName;
-module.exports.sendProgress = sendProgress;
+module.exports = {fetchList, fetchWoorden, fetchImages, fetchName, sendProgress};
