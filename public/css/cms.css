@@ -344,7 +344,7 @@ main {
 }
 
 .auth-form {
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
     width: auto;
@@ -453,6 +453,10 @@ main {
     width: 100%;
 }
 
+.legal-container > hr {
+    width: 100%;
+}
+
 .student-detail-header {
     display: flex;
     flex-direction: row;
@@ -513,8 +517,40 @@ main {
 }
 
 #spinner {
-    position: absolute;
+    position: fixed;
     display: none;
     left: 50%;
     top: 40%;
+}
+
+.legal-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 70vh;
+    margin: 64px auto;
+}
+
+.boarding-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 70vh;
+    margin: 64px auto;
+}
+
+.legal-container > .form-button {
+    width: 30%;
+}
+
+#logo {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#back-button-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
 }

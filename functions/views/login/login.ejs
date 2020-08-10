@@ -15,11 +15,20 @@
 <body>
 <div id="spinner" class="lds-ring"><div></div><div></div><div></div><div></div></div>
 <div id="auth-container">
+    <div id="back-button-container">
+        <a href="/">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-narrow-left" width="44"
+                 height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="black" fill="none" stroke-linecap="round"
+                 stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z"/>
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <line x1="5" y1="12" x2="9" y2="16"/>
+                <line x1="5" y1="12" x2="9" y2="8"/>
+            </svg>
+        </a>
+    </div>
     <h1><span>v</span><span class="red-letter">o</span><span>c</span><span class="red-letter">a</span><span>b</span>
     </h1>
-    <h3 id="login-subtitle">Voice Vocabulary Content Management Systeem</h3>
-    <button id="show-login-button" class="form-button success-button">inloggen</button>
-
     <div id="login-form" class="auth-form">
         <input id="username-input" class="form-input" type="email" placeholder="e-mail" name="user" required>
         <input id="password-input" class="form-input" type="password" placeholder="wachtwoord" name="pass" autocomplete="on"
