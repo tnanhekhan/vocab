@@ -45,5 +45,5 @@ expressApp.use(function (err, req, res, next) {
     res.render('error', {title: "404", dest: "404"});
 });
 
-exports.expressApp = functions.region('europe-west1').https.onRequest(expressApp);
+exports.expressApp = functions.https.onRequest(expressApp);
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(dialogflow);
