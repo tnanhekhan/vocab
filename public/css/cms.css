@@ -554,3 +554,15 @@ main {
     align-items: flex-start;
     width: 100%;
 }
+
+.legal-flag{
+    height: 32px;
+}
+
+.legal-header{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
