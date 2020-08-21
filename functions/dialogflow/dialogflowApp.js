@@ -9,8 +9,9 @@ const intent = require('./assets/intentsLogic');
 
 app.intent('Welcome', conv => {
     intent.welcome(conv);
-    conv.ask('hi, welkom in de vocab app? Met mij kun je woordjes oefenen.' +
-        'Als je wilt oefenen zeg dan /ik wil oefenen');
+    conv.ask('•	Hi, welkom in de voicab app. Met mij kun je woordjes oefenen. Ik zeg een woord en ik wacht tot jij het' +
+        ' woord herhaald hebt. Als jij het goed hebt herhaald gaan we door naar het volgende woord. Als je wilt oefenen ' +
+        'zeg dan /ik wil oefenen. ');
 });
 
 app.intent('Woordjes', (conv, {gesprokenWoord}) => {
@@ -33,8 +34,8 @@ app.intent('spreuk', conv => {
     conv.ask('Leuk dat je komt oefenen. Wat is de geheime spreuk die je van je meester of juf hebt gekregen? Als je geen spreuk hebt zeg dan "ik heb geen spreuk".');
 });
 
-app.intent('lijst spreuk', (conv, {spreuk}) => {
-    return intent.lijstSpreuk(conv, {spreuk})
+app.intent('lijst spreuk', (conv, {parameter}) => {
+    return intent.lijstSpreuk(conv, {parameter})
         .then(result => {
             conv.ask(`Hallo ${result.naam}. Zeg start om te beginnen.`);
         });

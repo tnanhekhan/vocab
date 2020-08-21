@@ -40,6 +40,8 @@ async function fetchName(studentID) {
     return name.naam;
 }
 
+
+//updating the firebase doesnt work.
 async function sendProgress(completedWords, difficultWords, woordenlijst, student) {
     const collectie = db.collection('progression').where('student', '==', student);
     let studentData = await collectie.get();
@@ -50,8 +52,7 @@ async function sendProgress(completedWords, difficultWords, woordenlijst, studen
         }
     });
     let geoefend = data[0].aantalWoorden + completedWords;
-    console.log('data ', data.id);
-    studentData.update({
+    db.collection('progression').doc(data[0].id).update({
         woordenGeoefend: geoefend,
         student: student,
         moeilijkeWoorden: difficultWords,

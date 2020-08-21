@@ -9,8 +9,8 @@ exports.welcome = (conv) => {
     conv.data.index = 0;
 };
 
-exports.lijstSpreuk = (conv, {spreuk}) => {
-    return data.fetchList(spreuk).then(result => {
+exports.lijstSpreuk = (conv, {parameter}) => {
+    return data.fetchList(parameter).then(result => {
         conv.data.lijst = result[0].list;
         conv.data.student = result[0].student;
         return data.fetchName(result[0].student).then(name => {
