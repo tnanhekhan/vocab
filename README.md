@@ -1,7 +1,5 @@
 # Vocab
 
-Meesterproef Minor Web Development
-
 ![Poster](docs/poster.png)
 
 ![CMS-Poster](docs/cms-poster.png)
